@@ -1,5 +1,7 @@
 # EXP-001: Ralph loop vs Plan-then-execute
 
+> 실행 절차: [protocol.md](protocol.md) · 초기 프롬프트: [prompts/](prompts/)
+
 ## 가설
 
 [S-01](../../hypotheses/catalog.md): Plan-then-execute가 Ralph loop보다 동일 과제에서 토큰을 적게 쓴다.
