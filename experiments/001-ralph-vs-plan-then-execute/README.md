@@ -18,7 +18,7 @@
 ## 통제 변수
 
 - 모델: Claude Opus 고정 (모든 조건, 모든 세션)
-- 기술 스택: 실험 시작 전 확정하여 양 조건에 동일 지정 (TBD)
+- 기술 스택: TypeScript (Node.js) + Fastify + Prisma + PostgreSQL (선정 근거는 [과제 스펙](../../tasks/realworld-backend/README.md) 참조)
 - 초기 입력: `tasks/realworld-backend/README.md`의 과제 정의를 동일하게 제공
 - 실험자 개입: 최초 골 지정 이후 무개입 원칙. 불가피한 개입은 로그에 기록
 
