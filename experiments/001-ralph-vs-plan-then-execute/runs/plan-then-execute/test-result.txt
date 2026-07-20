@@ -1,0 +1,626 @@
+
+> realworld-backend@1.0.0 test:api
+> start-server-and-test 'npm run dev' http://localhost:3000/api/tags 'newman run Conduit.postman_collection.json --delay-request 500 --global-var APIURL=http://localhost:3000/api --global-var USERNAME=u$(date +%s) --global-var EMAIL=e$(date +%s)@mail.com --global-var PASSWORD=password'
+
+1: starting server using command "npm run dev"
+and when url "[ 'http://localhost:3000/api/tags' ]" is responding with HTTP status code 200
+running tests using command "newman run Conduit.postman_collection.json --delay-request 500 --global-var APIURL=http://localhost:3000/api --global-var USERNAME=u$(date +%s) --global-var EMAIL=e$(date +%s)@mail.com --global-var PASSWORD=password"
+
+
+> realworld-backend@1.0.0 dev
+> prisma migrate deploy && tsx watch src/server.ts
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+
+1 migration found in prisma/migrations
+
+
+No pending migrations to apply.
+RealWorld API listening on :3000
+(node:73755) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+newman
+
+Conduit
+
+❏ Auth
+↳ Register
+  POST http://localhost:3000/api/users [200 OK, 421B, 103ms]
+  ┌
+  │ 'Using "environment" is deprecated. Use "pm.environmen
+  │ t" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "user" property
+  ✓  User has "email" property
+  ✓  User has "username" property
+  ✓  User has "bio" property
+  ✓  User has "image" property
+  ✓  User has "token" property
+
+↳ Login
+  POST http://localhost:3000/api/users/login [200 OK, 421B, 79ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "user" property
+  ✓  User has "email" property
+  ✓  User has "username" property
+  ✓  User has "bio" property
+  ✓  User has "image" property
+  ✓  User has "token" property
+
+↳ Login and Remember Token
+  POST http://localhost:3000/api/users/login [200 OK, 421B, 75ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "user" property
+  ✓  User has "email" property
+  ✓  User has "username" property
+  ✓  User has "bio" property
+  ✓  User has "image" property
+  ✓  User has "token" property
+  ✓  Global variable "token" has been set
+
+↳ Current User
+  GET http://localhost:3000/api/user [200 OK, 421B, 4ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "user" property
+  ✓  User has "email" property
+  ✓  User has "username" property
+  ✓  User has "bio" property
+  ✓  User has "image" property
+  ✓  User has "token" property
+
+↳ Update User
+  PUT http://localhost:3000/api/user [200 OK, 421B, 5ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "user" property
+  ✓  User has "email" property
+  ✓  User has "username" property
+  ✓  User has "bio" property
+  ✓  User has "image" property
+  ✓  User has "token" property
+
+❏ Articles
+↳ All Articles
+  GET http://localhost:3000/api/articles [200 OK, 204B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  articlesCount is 0 when feed is empty
+
+↳ Articles by Author
+  GET http://localhost:3000/api/articles?author=johnjacob [200 OK, 204B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  articlesCount is 0 when feed is empty
+
+↳ Articles Favorited by Username
+  GET http://localhost:3000/api/articles?favorited=u1784543851 [200 OK, 204B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  articlesCount is 0 when feed is empty
+
+↳ Articles by Tag
+  GET http://localhost:3000/api/articles?tag=dragons [200 OK, 204B, 4ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  articlesCount is 0 when feed is empty
+
+❏ Articles, Favorite, Comments
+↳ Create Article
+  POST http://localhost:3000/api/articles [201 Created, 550B, 5ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "article" property
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "body" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Feed
+  GET http://localhost:3000/api/articles/feed [200 OK, 204B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  articlesCount is 0 when feed is empty
+
+↳ All Articles
+  GET http://localhost:3000/api/articles [200 OK, 541B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ All Articles with auth
+  GET http://localhost:3000/api/articles [200 OK, 541B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Articles by Author
+  GET http://localhost:3000/api/articles?author=u1784543851 [200 OK, 541B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Articles by Author with auth
+  GET http://localhost:3000/api/articles?author=u1784543851 [200 OK, 541B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Single Article by slug
+  GET http://localhost:3000/api/articles/how-to-train-your-dragon-612c38 [200 OK, 545B, 3ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "article" property
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "body" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Articles by Tag
+  GET http://localhost:3000/api/articles?tag=dragons [200 OK, 541B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  An article was returned
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  The first tag is dragons
+  ✓  The second tag is training
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Update Article
+  PUT http://localhost:3000/api/articles/how-to-train-your-dragon-612c38 [200 OK, 544B, 5ms]
+  ┌
+  │ 'Using "environment" is deprecated. Use "pm.environmen
+  │ t" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "article" property
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "body" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+
+↳ Favorite Article
+  POST http://localhost:3000/api/articles/how-to-train-your-dragon-612c38/favorite [200 OK, 543B, 5ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "article" property
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "body" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article's 'favorited' property is true
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+  ✓  Article's 'favoritesCount' property is greater than 0
+
+↳ Articles Favorited by Username
+  GET http://localhost:3000/api/articles?favorited=u1784543851 [200 OK, 540B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is 1
+
+↳ Articles Favorited by Username with auth
+  GET http://localhost:3000/api/articles?favorited=u1784543851 [200 OK, 540B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "articles" property
+  ✓  Response contains "articlesCount" property
+  ✓  articlesCount is an integer
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is 1
+
+↳ Unfavorite Article
+  DELETE http://localhost:3000/api/articles/how-to-train-your-dragon-612c38/favorite [200 OK, 544B, 4ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "article" property
+  ✓  Article has "title" property
+  ✓  Article has "slug" property
+  ✓  Article has "body" property
+  ✓  Article has "createdAt" property
+  ✓  Article's "createdAt" property is an ISO 8601 timestamp
+  ✓  Article has "updatedAt" property
+  ✓  Article's "updatedAt" property is an ISO 8601 timestamp
+  ✓  Article has "description" property
+  ✓  Article has "tagList" property
+  ✓  Article's "tagList" property is an Array
+  ✓  Article has "author" property
+  ✓  Article has "favorited" property
+  ✓  Article has "favoritesCount" property
+  ✓  favoritesCount is an integer
+  ✓  Article's "favorited" property is false
+
+↳ Create Comment for Article
+  POST http://localhost:3000/api/articles/how-to-train-your-dragon-612c38/comments [201 Created, 381B, 5ms]
+  ┌
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "comment" property
+  ✓  Comment has "id" property
+  ✓  Comment has "body" property
+  ✓  Comment has "createdAt" property
+  ✓  "createdAt" property is an ISO 8601 timestamp
+  ✓  Comment has "updatedAt" property
+  ✓  "updatedAt" property is an ISO 8601 timestamp
+  ✓  Comment has "author" property
+
+↳ All Comments for Article
+  GET http://localhost:3000/api/articles/how-to-train-your-dragon-612c38/comments [200 OK, 379B, 3ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "comments" property
+  ✓  Comment has "id" property
+  ✓  Comment has "body" property
+  ✓  Comment has "createdAt" property
+  ✓  "createdAt" property is an ISO 8601 timestamp
+  ✓  Comment has "updatedAt" property
+  ✓  "updatedAt" property is an ISO 8601 timestamp
+  ✓  Comment has "author" property
+
+↳ All Comments for Article without login
+  GET http://localhost:3000/api/articles/how-to-train-your-dragon-612c38/comments [200 OK, 379B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "comments" property
+  ✓  Comment has "id" property
+  ✓  Comment has "body" property
+  ✓  Comment has "createdAt" property
+  ✓  "createdAt" property is an ISO 8601 timestamp
+  ✓  Comment has "updatedAt" property
+  ✓  "updatedAt" property is an ISO 8601 timestamp
+  ✓  Comment has "author" property
+
+↳ Delete Comment for Article
+  DELETE http://localhost:3000/api/articles/how-to-train-your-dragon-612c38/comments/2 [200 OK, 172B, 3ms]
+
+↳ Delete Article
+  DELETE http://localhost:3000/api/articles/how-to-train-your-dragon-612c38 [200 OK, 172B, 3ms]
+
+❏ Profiles
+↳ Register Celeb
+  POST http://localhost:3000/api/users [200 OK, 441B, 76ms]
+  ┌
+  │ 'Using "environment" is deprecated. Use "pm.environmen
+  │ t" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response contains "user" property
+  ✓  User has "email" property
+  ✓  User has "username" property
+  ✓  User has "bio" property
+  ✓  User has "image" property
+  ✓  User has "token" property
+
+↳ Profile
+  GET http://localhost:3000/api/profiles/celeb_u1784543851 [200 OK, 257B, 2ms]
+  ┌
+  │ 'Using "environment" is deprecated. Use "pm.environmen
+  │ t" instead.'
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "profile" property
+  ✓  Profile has "username" property
+  ✓  Profile has "bio" property
+  ✓  Profile has "image" property
+  ✓  Profile has "following" property
+
+↳ Follow Profile
+  POST http://localhost:3000/api/profiles/celeb_u1784543851/follow [200 OK, 256B, 5ms]
+  ┌
+  │ 'Using "environment" is deprecated. Use "pm.environmen
+  │ t" instead.'
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "profile" property
+  ✓  Profile has "username" property
+  ✓  Profile has "bio" property
+  ✓  Profile has "image" property
+  ✓  Profile has "following" property
+  ✓  Profile's "following" property is true
+
+↳ Unfollow Profile
+  DELETE http://localhost:3000/api/profiles/celeb_u1784543851/follow [200 OK, 257B, 3ms]
+  ┌
+  │ 'Using "environment" is deprecated. Use "pm.environmen
+  │ t" instead.'
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "profile" property
+  ✓  Profile has "username" property
+  ✓  Profile has "bio" property
+  ✓  Profile has "image" property
+  ✓  Profile has "following" property
+  ✓  Profile's "following" property is false
+
+❏ Tags
+↳ All Tags
+  GET http://localhost:3000/api/tags [200 OK, 202B, 2ms]
+  ┌
+  │ 'Using "responseCode" is deprecated. Use "pm.response.
+  │ code" instead.'
+  │ 'Using "tests" is deprecated. Use "pm.test()" instead.
+  │ '
+  └
+  ✓  Response code is 200 OK
+  ✓  Response contains "tags" property
+  ✓  "tags" property returned as array
+
+┌─────────────────────────┬───────────────────┬──────────────────┐
+│                         │          executed │           failed │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│              iterations │                 1 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│                requests │                32 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│            test-scripts │                48 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│      prerequest-scripts │                18 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│              assertions │               311 │                0 │
+├─────────────────────────┴───────────────────┴──────────────────┤
+│ total run duration: 16.9s                                      │
+├────────────────────────────────────────────────────────────────┤
+│ total data received: 7.03kB (approx)                           │
+├────────────────────────────────────────────────────────────────┤
+│ average response time: 13ms [min: 2ms, max: 103ms, s.d.: 26ms] │
+└────────────────────────────────────────────────────────────────┘

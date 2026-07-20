@@ -6,7 +6,7 @@
 
 | 코드 | 가설 | 상태 | 실험 |
 |------|------|------|------|
-| S-01 | Plan-then-execute(계획→아토믹 태스크 분할→태스크별 새 세션 병렬 구현, 문서 기반 컨텍스트 연속성)가 Ralph loop(골 지정 후 자율 루프)보다 동일 과제에서 토큰을 적게 쓴다 | 진행중 | [EXP-001](../experiments/001-ralph-vs-plan-then-execute/) |
+| S-01 | Plan-then-execute(계획→아토믹 태스크 분할→태스크별 새 세션 병렬 구현, 문서 기반 컨텍스트 연속성)가 Ralph loop(골 지정 후 자율 루프)보다 동일 과제에서 토큰을 적게 쓴다 | 기각 (단일 세션에 들어가는 과제 기준, PTE가 8.7배 사용) | [EXP-001](../experiments/001-ralph-vs-plan-then-execute/report.md) |
 
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 

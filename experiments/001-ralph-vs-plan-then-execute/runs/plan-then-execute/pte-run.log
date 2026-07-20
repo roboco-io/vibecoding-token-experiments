@@ -1,0 +1,30 @@
+=== 01-scaffolding start: 2026-07-20 19:02:44 ===
+=== 01-scaffolding end (exit 0): 2026-07-20 19:04:49 ===
+=== 02-prisma-schema start: 2026-07-20 19:05:00 ===
+=== 02-prisma-schema end (exit 0): 2026-07-20 19:06:31 ===
+=== 11-tags start: 2026-07-20 19:06:41 ===
+=== 03-common-infra start: 2026-07-20 19:06:41 ===
+=== 04-views-slug start: 2026-07-20 19:06:41 ===
+=== 04-views-slug end (exit 0): 2026-07-20 19:08:14 ===
+=== 11-tags end (exit 0): 2026-07-20 19:10:22 ===
+=== 03-common-infra end (exit 0): 2026-07-20 19:10:40 ===
+=== 05-users-auth start: 2026-07-20 19:11:03 ===
+=== 08-articles-list-feed start: 2026-07-20 19:11:03 ===
+=== 09-favorites start: 2026-07-20 19:11:03 ===
+=== 06-profiles start: 2026-07-20 19:11:03 ===
+=== 10-comments start: 2026-07-20 19:11:03 ===
+=== 07-articles-crud start: 2026-07-20 19:11:03 ===
+=== 06-profiles end (exit 0): 2026-07-20 19:14:20 ===
+=== 10-comments end (exit 0): 2026-07-20 19:16:41 ===
+=== 07-articles-crud end (exit 0): 2026-07-20 19:16:49 ===
+=== 08-articles-list-feed end (exit 0): 2026-07-20 19:17:25 ===
+=== 05-users-auth end (exit 0): 2026-07-20 19:19:07 ===
+=== 09-favorites end (exit 0): 2026-07-20 19:20:35 ===
+=== 12-newman-e2e start: 2026-07-20 19:21:18 ===
+=== 12-newman-e2e end (exit 0): 2026-07-20 19:31:17 ===
+=== 13-fix-content-type-parser start: 2026-07-20 19:32:09 ===
+=== 14-fix-favorites-types start: 2026-07-20 19:32:09 ===
+=== 14-fix-favorites-types end (exit 0): 2026-07-20 19:33:40 ===
+=== 13-fix-content-type-parser end (exit 0): 2026-07-20 19:35:00 ===
+=== 15-regate start: 2026-07-20 19:35:09 ===
+=== 15-regate end (exit 0): 2026-07-20 19:37:17 ===
