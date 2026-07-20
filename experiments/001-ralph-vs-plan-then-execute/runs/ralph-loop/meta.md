@@ -4,7 +4,24 @@
 - 모델: Claude Opus (`claude --model opus -p`)
 - 실행 방식: headless Ralph loop — `ralph.sh`가 `PROMPT.md`를 골로 `claude -p --dangerously-skip-permissions`를 최대 15회 반복, 완료 마커 `.ralph-done` 생성 시 중단. 이터레이션당 새 프로세스(새 세션 로그)
 - 시작 시각: 2026-07-20 09:00:34 (유효 실행)
-- 종료 시각: (완료 시 기록)
+- 종료 시각: 2026-07-20 09:14:29 (이터레이션 1회 만에 `.ralph-done` 생성, 소요 약 14분)
+
+## 결과
+
+- **완료 판정: 통과** — 공식 RealWorld API 테스트(Hurl, 공식 리포가 Postman/Newman에서 마이그레이션)를 실험자가 독립 재실행: 13파일 / 154요청 100% 통과 ([test-result.txt](test-result.txt)). 단일 명령 기동(`npm run start`) 확인.
+- **토큰 집계** (`scripts/aggregate_tokens.py runs/ralph-loop/logs`):
+
+| 항목 | 값 |
+|------|-----|
+| sessions | 1 |
+| messages | 112 |
+| input_tokens | 211 |
+| output_tokens | 90,877 |
+| cache_creation_input_tokens | 233,687 |
+| cache_read_input_tokens | 8,426,223 |
+| **billable (input+output+cache_creation)** | **324,775** |
+
+- 작업 리포 커밋 4개 (scaffold → feat 전체 구현 → 테스트 벤더링 → .env 커밋)
 - 세션 로그 슬러그: `~/.claude/projects/-Users-dohyunjung-Workspace-roboco-io-research-realworld-exp001-ralph/`
 
 ## 개입 기록

@@ -1,0 +1,24 @@
+
+> realworld-fastify-prisma@1.0.0 test:api
+> hurl --test --jobs 1 --variable host=http://localhost:3000 --variable uid=$(date +%s)$$ tests/spec/hurl/*.hurl
+
+Success tests/spec/hurl/articles.hurl (17 request(s) in 134 ms)
+Success tests/spec/hurl/auth.hurl (20 request(s) in 156 ms)
+Success tests/spec/hurl/comments.hurl (13 request(s) in 84 ms)
+Success tests/spec/hurl/errors_articles.hurl (20 request(s) in 83 ms)
+Success tests/spec/hurl/errors_auth.hurl (20 request(s) in 285 ms)
+Success tests/spec/hurl/errors_authorization.hurl (9 request(s) in 146 ms)
+Success tests/spec/hurl/errors_comments.hurl (10 request(s) in 76 ms)
+Success tests/spec/hurl/errors_profiles.hurl (6 request(s) in 75 ms)
+Success tests/spec/hurl/favorites.hurl (9 request(s) in 82 ms)
+Success tests/spec/hurl/feed.hurl (12 request(s) in 154 ms)
+Success tests/spec/hurl/pagination.hurl (7 request(s) in 78 ms)
+Success tests/spec/hurl/profiles.hurl (7 request(s) in 143 ms)
+Success tests/spec/hurl/tags.hurl (4 request(s) in 76 ms)
+--------------------------------------------------------------------------------
+Executed files:    13
+Executed requests: 154 (96.8/s)
+Succeeded files:   13 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          1591 ms (0h:0m:1s:591ms)
+
