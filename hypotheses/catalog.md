@@ -12,7 +12,7 @@
 
 | 코드 | 가설 | 상태 | 실험 |
 |------|------|------|------|
-| L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 미실험 | [EXP-002](../experiments/002-korean-vs-english/) |
+| L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 보류 (방향 일치·KO 10%↑이나 run 간 변동에 묻힘, n≥5 필요) | [EXP-002](../experiments/002-korean-vs-english/report.md) |
 
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 

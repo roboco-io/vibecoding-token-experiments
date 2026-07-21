@@ -1,0 +1,28 @@
+=== iteration 1 start: 2026-07-21 13:40:18 ===
+RealWorld 백엔드 API 구현을 완료했습니다.
+
+**검증 결과 (직접 실행)**
+- `npm run test:api` → 공식 Hurl 스위트 **13개 파일 / 154개 요청 전부 통과** (실패 0)
+- `npm run dev` → 서버 기동, `/health` 200, `POST /api/users` 201
+- `npm run typecheck` → 에러 없음
+
+**구성**
+- `src/lib/` — 인증(`Token`/`Bearer`), 검증, 직렬화, slug, 공통 article 쿼리
+- `src/routes/` — users, profiles, articles, comments, tags
+- `prisma/schema.prisma` — User, Follow, Article, Tag, ArticleTag, Favorite, Comment
+- `tests/hurl/` — 공식 스위트 벤더링(`realworld-apps/realworld` `specs/api/hurl`)
+- `scripts/run-api-tests.sh` — 임시 DB로 서버 기동 후 스위트 실행
+
+**스펙 대응 중 까다로웠던 지점**
+- 에러 봉투 `{"errors":{field:[msg]}}`와 401/403/404/409/422 구분
+- `PUT /user`의 nullable 필드(`bio`/`image`: `""`·`null` → `null`) vs 비-nullable(`username`/`email`/`password` 공백 거부), 비밀번호 최소 8자
+- `PUT /articles/:slug`의 `tagList`: 생략=유지, `[]`=전체 삭제, `null`=422
+- 목록 응답에서 `body` 필드 완전 제외, `articlesCount`는 페이지 크기가 아닌 전체 매칭 수
+- `updatedAt`이 항상 증가하도록 밀리초 단위 충돌 방지
+
+커밋 4개로 분리했고, 검증 후 `.ralph-done`을 생성했습니다. `PROMPT.md`/`ralph.sh`는 손대지 않았습니다.
+
+주의할 점 하나: `.env`는 전역 gitignore 규칙에 걸려 커밋되지 않으므로, `.env.example`을 커밋하고 `db:setup` 단계에서 자동 복사하도록 했습니다. 실제 배포 시에는 `JWT_SECRET`을 반드시 교체해야 합니다.
+=== iteration 1 end (exit 0): 2026-07-21 13:47:16 ===
+=== DONE at iteration 1 ===
+=== ralph loop finished: 2026-07-21 13:47:16 ===
