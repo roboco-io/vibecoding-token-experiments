@@ -1,0 +1,33 @@
+=== iteration 1 start: 2026-07-21 23:05:01 ===
+완료했습니다.
+
+## 결과
+
+**완료 기준 1 — 공식 Hurl 테스트 전체 통과** ✅
+```
+Executed files:    13
+Executed requests: 154
+Succeeded files:   13 (100.0%)
+Failed files:      0 (0.0%)   종료코드 0
+```
+
+**완료 기준 2 — 단일 명령 기동** ✅ `npm start` (마이그레이션 적용 + 서버 기동)
+
+### 검증 방식
+빈 DB 1회, 누적 DB 2회, 그리고 **커밋된 상태를 clean clone해 `.env` 없이** 실행한 최종 1회 — 총 4회 모두 154/154 통과. `tsc --noEmit`도 통과.
+
+### 구현
+- **스택**: TypeScript(ESM/NodeNext) + Fastify 5 + Prisma 6 + SQLite, `tsx` 실행(빌드 단계 없음)
+- **범위**: 인증(JWT), 유저/프로필·팔로우, 아티클 CRUD, 목록·피드·페이지네이션, 즐겨찾기, 코멘트, 태그
+- 커밋 4개(스캐폴딩 → 공통 기반 → 엔드포인트 → 테스트 하네스), 전부 한국어 메시지
+
+계약 스킬 덕분에 까다로운 지점들을 첫 실행에 통과했습니다: 인증 스킴 `Token`(Bearer 아님), 목록 응답의 `body` 키 제거, `tagList` 입력 순서 보존, 수정 시 `updatedAt` 강제 갱신 vs favorite 시 보존, `bio`/`image`만 `null` 정규화, 검사 순서(401→422→404→403→409).
+
+### 참고 사항 두 가지
+- **`.env`는 커밋되지 않았습니다** — 사용자 전역 gitignore에 걸립니다. 대신 `.env.example`을 두고, `npm start`에 `DATABASE_URL` 기본값 fallback을 넣어 clone 직후에도 동작하게 했습니다(위 clean clone 검증으로 확인).
+- **hurl 테스트 경로는 `specs/api/hurl/`** 입니다(과제문의 `api/hurl`과 다름). 지시대로 `tests/hurl/`에 벤더링했습니다.
+
+`.ralph-done`을 생성했습니다.
+=== iteration 1 end (exit 0): 2026-07-21 23:12:57 ===
+=== DONE at iteration 1 ===
+=== ralph loop finished: 2026-07-21 23:12:57 ===

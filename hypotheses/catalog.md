@@ -8,6 +8,7 @@
 |------|------|------|------|
 | S-01 | Plan-then-execute(계획→아토믹 태스크 분할→태스크별 새 세션 병렬 구현, 문서 기반 컨텍스트 연속성)가 Ralph loop(골 지정 후 자율 루프)보다 동일 과제에서 토큰을 적게 쓴다 | 기각 (단일 세션에 들어가는 과제 기준, PTE가 8.7배 사용) | [EXP-001](../experiments/001-ralph-vs-plan-then-execute/report.md) |
 | S-02 | PTE의 컨텍스트를 스킬 공식 권고(문서 200줄 이하 분할, 스킬 메커니즘으로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 billable이 유의미하게(30%↑) 줄어든다 | 검증 (39.3% 감소, 수정 루프 소멸. 단 ralph 대비 여전히 5.3배) | [EXP-003](../experiments/003-pte-skills/report.md) |
+| S-03 | 단일 세션 ralph에 도메인 계약 스킬을 제공하면 스펙 탐색·시행착오가 줄어 스킬 없는 ralph 대비 billable이 감소한다 | 진행중 | [EXP-004](../experiments/004-ralph-skills/) |
 
 ## L축 — 언어
 
