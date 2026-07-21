@@ -5,6 +5,7 @@
 - [x] EXP-001: Ralph loop vs Plan-then-execute (RealWorld 백엔드, Opus 고정) — S-01 기각, [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
 - [x] EXP-002: 한국어 vs 영어 파이프라인 토큰 비교 (L-01, KO/EN × n=2) — 보류 판정, [보고서](experiments/002-korean-vs-english/report.md)
 - [x] EXP-003: PTE + 스킬식 점진 공개 (S-02) — 검증(-39.3%), [보고서](experiments/003-pte-skills/report.md)
+- [x] EXP-004: Ralph + 스킬 구조 (S-03) — 보류(무효과), [보고서](experiments/004-ralph-skills/report.md)
 - [ ] 측정 파이프라인 정리 (tokenhabit + ccusage 래퍼)
 
 ## Phase 2 — 토큰 습관(H축) 실험

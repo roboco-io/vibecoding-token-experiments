@@ -1,0 +1,24 @@
+
+> realworld-fastify-api@1.0.0 test:api
+> ./scripts/run-api-tests.sh
+
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/articles.hurl (17 request(s) in 73 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/auth.hurl (20 request(s) in 86 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/comments.hurl (13 request(s) in 53 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/errors_articles.hurl (20 request(s) in 45 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/errors_auth.hurl (20 request(s) in 136 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/errors_authorization.hurl (9 request(s) in 76 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/errors_comments.hurl (10 request(s) in 42 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/errors_profiles.hurl (6 request(s) in 35 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/favorites.hurl (9 request(s) in 51 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/feed.hurl (12 request(s) in 81 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/pagination.hurl (7 request(s) in 43 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/profiles.hurl (7 request(s) in 95 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp004-skills-2/tests/hurl/tags.hurl (4 request(s) in 43 ms)
+--------------------------------------------------------------------------------
+Executed files:    13
+Executed requests: 154 (175.6/s)
+Succeeded files:   13 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          877 ms (0h:0m:0s:877ms)
+

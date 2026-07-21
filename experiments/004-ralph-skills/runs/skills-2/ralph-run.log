@@ -1,0 +1,17 @@
+=== iteration 1 start: 2026-07-21 23:13:01 ===
+완료했습니다.
+
+**결과**
+- `npm start`(마이그레이션 적용 + 기동) 및 `npm run dev` 모두 단일 명령으로 서버 기동 확인
+- 공식 Hurl 테스트 `tests/hurl/` 벤더링 — **13파일 / 154요청 전부 통과**
+- 빈 DB 상태, `.env` 없는 상태에서도 재현 검증 완료
+- 커밋: `97413e6` (실제 `.env`는 제외, `.env.example`만 포함)
+- 검증 후 `.ralph-done` 생성
+
+**구현 요약**
+- 인증: JWT(`Authorization: Token`), 비밀번호는 Node 내장 `scrypt` — bcrypt의 72바이트 절단 문제가 없어 NIST 요구사항인 64자 비밀번호를 그대로 처리
+- 유저/프로필, 아티클 CRUD·필터·페이지네이션·피드, 코멘트, 즐겨찾기, 태그
+- 에러는 `{"errors":{...}}` 단일 포맷, 검사 순서 401 → 422 → 404 → 403 → 409
+=== iteration 1 end (exit 0): 2026-07-21 23:20:54 ===
+=== DONE at iteration 1 ===
+=== ralph loop finished: 2026-07-21 23:20:54 ===
