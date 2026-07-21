@@ -1,0 +1,23 @@
+=== iteration 1 start: 2026-07-21 13:31:34 ===
+완료했습니다.
+
+**완료 기준 검증 결과 (직접 실행)**
+
+1. **RealWorld 공식 Hurl 테스트 전체 통과** — `tests/hurl/`에 13개 파일 벤더링, `npm test`로 클린 DB에서 실행:
+   ```
+   Executed files:    13
+   Executed requests: 154
+   Succeeded files:   13 (100.0%)
+   Failed files:      0 (0.0%)
+   ```
+2. **단일 명령 기동** — `.env`와 DB를 지운 상태에서 `npm run dev` 한 번으로 Prisma 생성 → 스키마 반영 → 서버 기동까지 되고 `GET /api/tags` 200 확인.
+
+**구현 요약**
+- `src/lib/` — JWT(의존성 없는 HS256), 인증 헤더 파싱, 검증 수집기, 응답 직렬화, N+1 방지용 배치 조회
+- `src/routes/` — users / profiles / articles / comments / tags
+- 에러 응답을 `{"errors":{"필드":["메시지"]}}`로 통일하고, 에러 핸들러를 라우트 등록보다 먼저 설정해 하위 컨텍스트가 상속받게 함 (이게 초기 6개 파일 실패의 원인이었습니다)
+
+`.ralph-done`을 생성했고, 커밋 `e507505`로 남겼습니다. 참고로 `.env`는 비밀키가 들어갈 자리라 커밋에서 빼고 `.env.example` + 자동 생성 스크립트로 대체했습니다.
+=== iteration 1 end (exit 0): 2026-07-21 13:39:02 ===
+=== DONE at iteration 1 ===
+=== ralph loop finished: 2026-07-21 13:39:02 ===
