@@ -1,0 +1,18 @@
+=== iteration 1 start: 2026-07-21 13:15:14 ===
+완료했습니다.
+
+**구현 내용**
+- TypeScript + Fastify + Prisma(SQLite)로 RealWorld 백엔드 전체 구현
+- 인증(JWT/bcrypt), 유저/프로필, 팔로우, 아티클 CRUD, 코멘트, 즐겨찾기, 태그, 피드, 페이지네이션
+- 에러 포맷 `{errors:{필드:[메시지]}}`와 상태 코드(201/204/401/403/404/409/422) 일괄 처리
+
+**완료 기준 검증 (직접 실행)**
+1. 공식 Hurl 테스트 13파일 154요청 → **154/154 통과**. 빈 DB 상태와, 별도 디렉터리로 `git clone` → `npm install` → `npm run dev` 한 클린 환경에서 각각 재검증.
+2. `npm run dev` 단일 명령으로 기동 (`.env` 자동 생성 → `prisma db push` → 서버 기동).
+
+**커밋 3개** (초기 설정/데이터 모델, API 구현, 테스트 벤더링+README) 후 `.ralph-done` 생성.
+
+주의할 점 하나: Prisma 7은 `datasource.url` 스키마 설정을 제거해 어댑터 방식으로 바뀌었기 때문에, 안정적인 v6으로 고정했습니다.
+=== iteration 1 end (exit 0): 2026-07-21 13:23:23 ===
+=== DONE at iteration 1 ===
+=== ralph loop finished: 2026-07-21 13:23:23 ===

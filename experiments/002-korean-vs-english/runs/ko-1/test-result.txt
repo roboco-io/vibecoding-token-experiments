@@ -1,0 +1,25 @@
+
+> realworld-fastify-api@1.0.0 test:api
+> bash tests/hurl/run-hurl-tests.sh
+
+Running Hurl tests against http://localhost:8000 with uid=178460785599252
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/articles.hurl (17 request(s) in 183 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/auth.hurl (20 request(s) in 221 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/comments.hurl (13 request(s) in 113 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/errors_articles.hurl (20 request(s) in 109 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/errors_auth.hurl (20 request(s) in 372 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/errors_authorization.hurl (9 request(s) in 195 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/errors_comments.hurl (10 request(s) in 101 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/errors_profiles.hurl (6 request(s) in 94 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/favorites.hurl (9 request(s) in 110 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/feed.hurl (12 request(s) in 205 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/pagination.hurl (7 request(s) in 103 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/profiles.hurl (7 request(s) in 191 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp002-ko-1/tests/hurl/tags.hurl (4 request(s) in 100 ms)
+--------------------------------------------------------------------------------
+Executed files:    13
+Executed requests: 154 (72.8/s)
+Succeeded files:   13 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          2116 ms (0h:0m:2s:116ms)
+
