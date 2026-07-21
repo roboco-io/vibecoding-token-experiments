@@ -10,14 +10,24 @@
 - **측정 도구**: 기존 도구를 활용한다 — [tokenhabit](https://github.com/epoko77-ai/tokenhabit) (`habit_scan.py`), [ccusage](https://github.com/ryoppippi/ccusage). `scripts/`에는 실험 구간 추출·비교 집계용 최소 래퍼만 둔다.
 - **1차 대상 도구**: Claude Code. 타 도구 비교는 [`ROADMAP.md`](ROADMAP.md) 참조.
 
-## 가설의 두 축
+## 가설의 축
 
 1. **워크플로 전략 (S축)**: 같은 과제를 어떤 전략으로 수행하느냐에 따른 토큰 차이
    - Ralph loop: 골을 지정한 뒤 랄프 루프로 자율 진행
    - Plan-then-execute: 계획 수립 → 태스크 분할 → 개별 태스크 병렬 구현
 2. **토큰 습관 (H축)**: tokenhabit의 H1~H8 습관 패턴 교정 전/후의 토큰 차이
+3. **언어 (L축)**: 프롬프트·산출 문서의 언어(한국어/영어)에 따른 토큰 차이
 
 전체 가설 목록과 실험 상태는 [`hypotheses/catalog.md`](hypotheses/catalog.md)에서 관리한다.
+
+## 실험 결과 요약
+
+| 실험 | 가설 | 판정 | 핵심 수치 |
+|------|------|------|-----------|
+| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralph loop vs Plan-then-execute | S-01: PTE가 토큰을 적게 쓴다 | **기각** | PTE가 **8.7배** 더 사용 (325K vs 2,840K). 세션 16회 분할로 기동 고정비(세션당 ~20.6K)·컨텍스트 재구축·문서 작성 비용이 누적. 단일 세션에 들어가는 과제 한정 |
+| [EXP-002](experiments/002-korean-vs-english/report.md) 한국어 vs 영어 파이프라인 | L-01: 영어가 토큰을 적게 쓴다 | **보류** | KO 평균 289K vs EN 평균 260K (KO 10%↑, 방향 일치)이나 run 간 궤적 변동(최대 138K)에 묻힘. 정적 기준선: 산문 KO/EN=2.76, 코드 혼합 1.39 |
+
+교훈 (반복 관찰): 토큰 비용의 지배 변수는 **컨텍스트(캐시) 재사용 여부**와 **에이전트의 작업 궤적**이었고, 워크플로 구조나 언어는 그보다 하위 변수였다.
 
 ## 실험 라이프사이클
 
