@@ -2,7 +2,8 @@
 
 ## Phase 1 — Claude Code 워크플로 전략 비교 (현재)
 
-- [ ] EXP-001: Ralph loop vs Plan-then-execute (RealWorld 백엔드, Opus 고정)
+- [x] EXP-001: Ralph loop vs Plan-then-execute (RealWorld 백엔드, Opus 고정) — S-01 기각, [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
+- [ ] EXP-002: 한국어 vs 영어 파이프라인 토큰 비교 (L-01, KO/EN × n=2) — 설계 완료, 실행 대기
 - [ ] 측정 파이프라인 정리 (tokenhabit + ccusage 래퍼)
 
 ## Phase 2 — 토큰 습관(H축) 실험

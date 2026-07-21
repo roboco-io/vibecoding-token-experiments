@@ -8,6 +8,12 @@
 |------|------|------|------|
 | S-01 | Plan-then-execute(계획→아토믹 태스크 분할→태스크별 새 세션 병렬 구현, 문서 기반 컨텍스트 연속성)가 Ralph loop(골 지정 후 자율 루프)보다 동일 과제에서 토큰을 적게 쓴다 | 기각 (단일 세션에 들어가는 과제 기준, PTE가 8.7배 사용) | [EXP-001](../experiments/001-ralph-vs-plan-then-execute/report.md) |
 
+## L축 — 언어
+
+| 코드 | 가설 | 상태 | 실험 |
+|------|------|------|------|
+| L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 미실험 | [EXP-002](../experiments/002-korean-vs-english/) |
+
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
 ### H1 세션 위생
