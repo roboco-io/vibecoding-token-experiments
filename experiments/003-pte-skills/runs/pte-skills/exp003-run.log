@@ -1,0 +1,28 @@
+=== 01-scaffolding start: 2026-07-21 20:36:13 ===
+=== 01-scaffolding end (exit 0): 2026-07-21 20:37:49 ===
+=== 03-errors-serializers start: 2026-07-21 20:37:55 ===
+=== 02-prisma-schema start: 2026-07-21 20:37:55 ===
+=== 02-prisma-schema end (exit 0): 2026-07-21 20:39:24 ===
+=== 03-errors-serializers end (exit 0): 2026-07-21 20:40:32 ===
+=== 04-auth-primitives start: 2026-07-21 20:40:38 ===
+=== 04-auth-primitives end (exit 0): 2026-07-21 20:43:07 ===
+=== 07-profiles-follow start: 2026-07-21 20:43:13 ===
+=== 05-users-register-login start: 2026-07-21 20:43:13 ===
+=== 07-profiles-follow end (exit 0): 2026-07-21 20:45:27 ===
+=== 05-users-register-login end (exit 0): 2026-07-21 20:45:36 ===
+=== 06-current-user start: 2026-07-21 20:45:41 ===
+=== 08-articles-crud start: 2026-07-21 20:45:41 ===
+=== 06-current-user end (exit 0): 2026-07-21 20:47:52 ===
+=== 08-articles-crud end (exit 0): 2026-07-21 20:49:25 ===
+=== 11-favorites start: 2026-07-21 20:49:31 ===
+=== 09-articles-list start: 2026-07-21 20:49:31 ===
+=== 13-tags start: 2026-07-21 20:49:31 ===
+=== 12-comments start: 2026-07-21 20:49:31 ===
+=== 13-tags end (exit 0): 2026-07-21 20:50:53 ===
+=== 09-articles-list end (exit 0): 2026-07-21 20:51:28 ===
+=== 11-favorites end (exit 0): 2026-07-21 20:52:15 ===
+=== 12-comments end (exit 0): 2026-07-21 20:52:15 ===
+=== 10-feed start: 2026-07-21 20:52:20 ===
+=== 10-feed end (exit 0): 2026-07-21 20:53:40 ===
+=== 14-full-suite start: 2026-07-21 20:53:45 ===
+=== 14-full-suite end (exit 0): 2026-07-21 20:57:38 ===
