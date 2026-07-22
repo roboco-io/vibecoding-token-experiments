@@ -11,7 +11,7 @@
 3. **실험 방식**: 조건(condition) 간 비교 실험. 공통 과제는 RealWorld App 백엔드 구현으로 고정, 모델은 Opus 단일.
 4. **가설 두 축 병행**:
    - S축(워크플로 전략): Ralph loop vs Plan-then-execute 등
-   - H축(토큰 습관): tokenhabit H1~H8 카탈로그 28패턴
+   - H축(토큰 습관): tokenhabit H1–H8 카탈로그 28패턴
 5. **구조**: 실험 중심 플랫 구조 채택 (검토안 중 A안). 가설 카테고리 계층(B안)은 중첩이 깊고 복합 실험 배치가 애매하여 기각, 단일 문서(C안)는 A/B 데이터 수용 한계로 기각.
 6. **anti-reinvention**: 측정은 tokenhabit·ccusage를 래핑. `scripts/`는 접착 코드만.
 
