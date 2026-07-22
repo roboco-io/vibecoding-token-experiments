@@ -20,23 +20,50 @@
 
 전체 가설 목록과 실험 상태는 [`hypotheses/catalog.md`](hypotheses/catalog.md)에서 관리한다.
 
-## 실험 결과 요약
+## 실험 결과
 
-| 실험 | 가설 | 판정 | 핵심 수치 |
-|------|------|------|-----------|
-| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralph loop vs Plan-then-execute | S-01: PTE가 토큰을 적게 쓴다 | **기각** | PTE가 **8.7배** 더 사용 (325K vs 2,840K). 세션 16회 분할로 기동 고정비(세션당 ~20.6K)·컨텍스트 재구축·문서 작성 비용이 누적. 단일 세션에 들어가는 과제 한정 |
-| [EXP-002](experiments/002-korean-vs-english/report.md) 한국어 vs 영어 파이프라인 | L-01: 영어가 토큰을 적게 쓴다 | **보류** | KO 평균 289K vs EN 평균 260K (KO 10%↑, 방향 일치)이나 run 간 궤적 변동(최대 138K)에 묻힘. 정적 기준선: 산문 KO/EN=2.76, 코드 혼합 1.39 |
-| [EXP-003](experiments/003-pte-skills/report.md) PTE + 스킬식 점진 공개 | S-02: 문서 200줄 이하 + 스킬 로드가 PTE 토큰을 30%↑ 줄인다 | **검증** | EXP-001 PTE 대비 **-39.3%** (2,840K→1,724K). 실행 세션당 -47%, 수정 루프 소멸(첫 시도 GREEN), 반복 읽기 소멸(Skill 호출 41회로 대체). 단 단일 세션 ralph 대비 여전히 5.3배 |
-| [EXP-004](experiments/004-ralph-skills/report.md) Ralph + 스킬 구조 | S-03: 스킬이 단일 세션 ralph의 토큰도 줄인다 | **보류** | 평균 +3.5% (289K→299K, 사실상 무효과). 단일 세션은 6개 스킬을 전량 선로딩 — 점진 공개는 멀티 세션에서만 작동. 궤적 변동(199K~400K)이 지배 |
+> 아래 표와 실험별 요약은 [`scripts/update_readme_results.py`](scripts/update_readme_results.py)가 각 실험의 `report.md`에서 자동 생성한다. 실험이 끝나 `report.md`가 커밋될 때 pre-commit 훅이 자동 실행한다 (수동 실행: `python3 scripts/update_readme_results.py`).
 
-교훈 (반복 관찰): 토큰 비용의 지배 변수는 **컨텍스트(캐시) 재사용 여부**와 **에이전트의 작업 궤적**이었고, 워크플로 구조나 언어는 그보다 하위 변수였다.
+<!-- RESULTS:BEGIN -->
+<!-- 이 블록은 scripts/update_readme_results.py가 experiments/*/report.md에서 자동 생성한다. 직접 수정 금지. -->
+
+| 실험 | 가설 | 판정 |
+|------|------|------|
+| [EXP-001](experiments/001-ralph-vs-plan-then-execute/report.md) Ralph loop vs Plan-then-execute | S-01: Plan-then-execute가 Ralph loop보다 동일 과제에서 토큰을 적게 쓴다 | **기각 (반증)** |
+| [EXP-002](experiments/002-korean-vs-english/report.md) 한국어 vs 영어 파이프라인 토큰 비교 | L-01: 전 파이프라인 영어 진행이 한국어 대비 billable 토큰을 유의미하게 줄인다 | **보류** |
+| [EXP-003](experiments/003-pte-skills/report.md) PTE + 스킬식 점진 공개 | S-02: 컨텍스트를 스킬 공식 권고(문서 200줄 이하, 스킬로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 billable 30% 이상 감소 | **검증** |
+| [EXP-004](experiments/004-ralph-skills/report.md) Ralph loop + 스킬 구조 | S-03: 단일 세션 ralph에 도메인 계약 스킬을 제공하면 billable이 감소한다 | **보류 (사실상 효과 없음)** |
+
+**EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
+plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
+
+**EXP-002 — 한국어 vs 영어 파이프라인 토큰 비교** (보류)  
+사전 등록한 판정 규칙(|KO평균−EN평균| > 조건 내 run 간 변동폭)을 충족하지 못함. 언어 효과(평균 차 29K)가 run 간 궤적 변동(최대 138K)에 묻힘 → [보고서](experiments/002-korean-vs-english/report.md)
+
+**EXP-003 — PTE + 스킬식 점진 공개** (검증)  
+**39.3% 감소** (2,839,815 → 1,723,575). 워크플로는 동일하고 컨텍스트 구조만 바꿨다. → [보고서](experiments/003-pte-skills/report.md)
+
+**EXP-004 — Ralph loop + 스킬 구조** (보류 (사실상 효과 없음))  
+평균 차 +3.5%(방향은 가설 반대)가 조건 내 변동폭(200K)에 완전히 묻힘 → [보고서](experiments/004-ralph-skills/report.md)
+
+<!-- RESULTS:END -->
+
+### 종합 인사이트 (실험이 쌓일 때마다 갱신)
+
+네 실험(RealWorld 백엔드, Opus 고정)을 관통하는 결론:
+
+1. **토큰 비용의 지배 변수는 컨텍스트(캐시) 재사용이다.** 단일 세션 ralph(~290K)는 한 번 만든 컨텍스트를 끝까지 재활용한다. 세션을 나누는 순간 기동 고정비(세션당 ~20.6K)와 컨텍스트 재구축 비용이 누적되어 같은 과제가 6~9배 비싸진다 (EXP-001).
+2. **점진 공개(스킬)는 멀티 세션 전용 처방이다.** 세션이 전체 컨텍스트의 부분집합만 필요할 때(PTE 태스크 세션) 반복 읽기와 수정 루프를 없애 -39.3% (EXP-003). 반면 전체가 필요한 단일 세션은 스킬을 전량 선로딩해 효과가 없다 (EXP-004).
+3. **에이전트의 작업 궤적 변동은 ±수십만 토큰의 상수 노이즈다.** 동일 조건의 run이 2배까지 벌어진다 (EXP-002 EN 191K~329K, EXP-004 199K~400K). ~10% 수준의 효과(예: 언어)는 n=2로 판별 불가.
+4. **실용 지침**: 과제가 단일 세션에 들어가면 단일 세션으로 돌려라. 분할이 불가피하면 컨텍스트를 스킬로 구조화해 손실을 줄여라. 문서 언어(한/영)는 이 두 결정보다 훨씬 작은 변수다.
 
 ## 실험 라이프사이클
 
 1. `templates/experiment-readme.md`를 복사해 `experiments/NNN-이름/README.md`에 실험 설계 작성 (가설, 조건, 측정 방법, 성공 기준)
 2. 조건별로 세션 수행, 세션 로그·측정 결과를 `runs/<조건명>/`에 저장
-3. `report.md`에 토큰 차이 분석과 결론 작성
+3. `report.md`에 토큰 차이 분석과 결론 작성 — 헤더에 `- 가설: [코드](...) — ...`와 `- **판정: ...** — <핵심 요약>` 형식을 지킨다 (README 자동 생성이 이 두 줄을 파싱)
 4. `hypotheses/catalog.md`의 상태 갱신 (미실험 → 진행중 → 검증/기각)
+5. `report.md` 커밋 시 pre-commit 훅이 README 실험 결과 섹션을 자동 갱신한다. 새로 클론했다면 최초 1회 `git config core.hooksPath hooks` 실행 (수동 갱신: `python3 scripts/update_readme_results.py`)
 
 ## 디렉토리 구조
 

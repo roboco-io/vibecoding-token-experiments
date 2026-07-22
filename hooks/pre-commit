@@ -1,0 +1,6 @@
+#!/bin/sh
+# 실험 report.md가 커밋에 포함되면 README의 실험 결과 섹션을 자동 재생성한다.
+if git diff --cached --name-only | grep -q '^experiments/.*/report\.md$'; then
+  python3 scripts/update_readme_results.py || exit 1
+  git add README.md
+fi
