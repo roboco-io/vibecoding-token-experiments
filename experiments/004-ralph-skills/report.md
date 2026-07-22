@@ -39,3 +39,5 @@
 - [runs/skills-1/](runs/skills-1/), [runs/skills-2/](runs/skills-2/) — meta, logs, test-result
 - 기준선: [EXP-002 runs/ko-1·ko-2](../002-korean-vs-english/runs/)
 
+
+> 관련 문서: 이 결과의 기술적 배경(프롬프트 캐싱 메커니즘)은 [docs/context-reuse-mechanism.md](../../docs/context-reuse-mechanism.md) 참조.

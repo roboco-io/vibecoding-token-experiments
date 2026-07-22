@@ -47,3 +47,5 @@
 
 - [runs/pte-skills/](runs/pte-skills/) — meta.md, logs/(세션 15), test-result.txt, exp003-run.log
 - 비교 기준: [EXP-001 report](../001-ralph-vs-plan-then-execute/report.md)
+
+> 관련 문서: 이 결과의 기술적 배경(프롬프트 캐싱 메커니즘)은 [docs/context-reuse-mechanism.md](../../docs/context-reuse-mechanism.md) 참조.

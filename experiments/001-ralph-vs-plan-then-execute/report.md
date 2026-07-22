@@ -86,3 +86,5 @@ ralph가 이긴 것은 루프 구조가 우월해서가 아니라 **한 번 만�
 - [runs/ralph-loop/](runs/ralph-loop/) — meta.md, logs/(세션 1), test-result.txt, ralph-run.log
 - [runs/plan-then-execute/](runs/plan-then-execute/) — meta.md, logs/(세션 16), test-result.txt, pte-run.log
 - 집계: `python3 ../../scripts/aggregate_tokens.py runs/ralph-loop/logs runs/plan-then-execute/logs`
+
+> 관련 문서: 이 결과의 기술적 배경(프롬프트 캐싱 메커니즘)은 [docs/context-reuse-mechanism.md](../../docs/context-reuse-mechanism.md) 참조.
