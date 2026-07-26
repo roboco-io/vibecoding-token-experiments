@@ -21,6 +21,7 @@
 | 코드 | 가설 | 상태 | 실험 |
 |------|------|------|------|
 | M-01 | Claude Code 백엔드를 Upstage Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용(USD)이 Opus 대비 유의미하게(50%↓) 낮다 | 보류 (solar-1 미완주·조기중단 — 허락-대기·컨텍스트 초과 반복, 테스트 0회. 연동 스택 자체는 검증) | [EXP-005](../experiments/005-solar-pro3-backend/report.md) |
+| M-02 | Claude Code 백엔드를 Upstage Solar Open 2로 교체하면 동일 과제를 무개입 완주할 수 있고, 완주 시 총비용(USD)이 Opus 대비 유의미하게 낮다 | 보류 (0/2 완주 — open2-2는 15 iter 소진, 독립 검증 3/13 파일. 자율 TDD 루프는 확립, 병목은 수렴 속도. 단가 미공개로 비용 판정 불능) | [EXP-006](../experiments/006-solar-open2-backend/report.md) |
 
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
