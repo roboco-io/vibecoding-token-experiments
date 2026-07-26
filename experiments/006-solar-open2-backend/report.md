@@ -1,5 +1,7 @@
 # EXP-006 결과 보고: Claude Code × Upstage Solar Open 2 백엔드
 
+> **정정 (2026-07-27, [EXP-007 부검](../007-solar-open2-autopsy/report.md))**: 본 보고의 usage 집계(1,481 요청 / input 67.0M / output 1.30M / 추정 $10.8)는 세션 JSONL을 행 단위로 합산해 **3.07배 과대 계상**된 수치다 (같은 message.id의 행들이 동일 usage를 반복 수록). 재집계 실측은 **483 요청 / input 23.3M / output 0.50M / 추정 ~$3.8** — "미완주 상태에서 Opus 완주 비용($6.41) 초과" 서술은 성립하지 않는다. 또한 매 iteration에 실험자 글로벌 환경(superpowers 훅·CLAUDE.md)이 주입되어 최소 3 iteration이 잠식된 오염이 확인됐다. 상세는 EXP-007 보고 참조.
+
 - 실험일: 2026-07-26 – 2026-07-27
 - 가설: [M-02](../../hypotheses/catalog.md) — Claude Code의 백엔드를 Solar Open 2로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다.
 - **판정: 보류** — 0/2 완주이나 완전 프로토콜 run은 1회뿐(open2-1은 1 iter 만에 허위 완료 신고로 자체 종료): open2-2는 15 iteration을 소진하고도 독립 검증 3/13 파일(94/154 요청)에 그쳤지만, solar-pro3에서 부재했던 자율 TDD 루프를 확립하고 단조 수렴해 "행동 계층" 병목이 자율성에서 수렴 속도로 이동했다.

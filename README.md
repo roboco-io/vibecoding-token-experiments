@@ -35,6 +35,7 @@
 | [EXP-004](experiments/004-ralph-skills/report.md) Ralph loop + 스킬 구조 | S-03: 단일 세션 ralph에 도메인 계약 스킬을 제공하면 billable이 감소한다 | **보류 (사실상 효과 없음)** |
 | [EXP-005](experiments/005-solar-pro3-backend/report.md) Claude Code × Upstage Solar Pro 3 백엔드 | M-01: Claude Code의 백엔드를 Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다. | **보류** |
 | [EXP-006](experiments/006-solar-open2-backend/report.md) Claude Code × Upstage Solar Open 2 백엔드 | M-02: Claude Code의 백엔드를 Solar Open 2로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다. | **보류** |
+| [EXP-007](experiments/007-solar-open2-autopsy/report.md) Solar Open 2 미완주 원인 부검 | M-03: EXP-006(Solar Open 2) 미완주는 수렴 속도 단일 병목이 아니라 복수 실패 요인(모델 행동 결함 · 실험 환경 오염 · 계측 왜곡)의 중첩이다. | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
 plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -54,6 +55,9 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 **EXP-006 — Claude Code × Upstage Solar Open 2 백엔드** (보류)  
 0/2 완주이나 완전 프로토콜 run은 1회뿐(open2-1은 1 iter 만에 허위 완료 신고로 자체 종료): open2-2는 15 iteration을 소진하고도 독립 검증 3/13 파일(94/154 요청)에 그쳤지만, solar-pro3에서 부재했던 자율 TDD 루프를 확립하고 단조 수렴해 "행동 계층" 병목이 자율성에서 수렴 속도로 이동했다. → [보고서](experiments/006-solar-open2-backend/report.md)
 
+**EXP-007 — Solar Open 2 미완주 원인 부검** (검증)  
+3계층 실증: ① 계측 왜곡(usage 3.07배 과대 계상 — 실제 483요청·23.3M input, 추정 ~$3.8로 Opus $6.41보다 낮음), ② 환경 오염(superpowers 훅·글로벌 CLAUDE.md 주입으로 최소 3 iteration 잠식), ③ 모델 행동 결함(선언-실행 탈락으로 커밋 0회, thinking-only 잘림 25회, 과제 이탈 환각 2건). → [보고서](experiments/007-solar-open2-autopsy/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (실험이 쌓일 때마다 갱신)
@@ -64,7 +68,7 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 2. **점진 공개(스킬)는 멀티 세션 전용 처방이다.** 세션이 전체 컨텍스트의 부분집합만 필요할 때(PTE 태스크 세션) 반복 읽기와 수정 루프를 없애 -39.3% (EXP-003). 반면 전체가 필요한 단일 세션은 스킬을 전량 선로딩해 효과가 없다 (EXP-004).
 3. **에이전트의 작업 궤적 변동은 ±수십만 토큰의 상수 노이즈다.** 동일 조건의 run이 2배까지 벌어진다 (EXP-002 EN 191K–329K, EXP-004 199K–400K). 약 10% 수준의 효과(예: 언어)는 n=2로 판별 불가.
 4. **실용 지침**: 과제가 단일 세션에 들어가면 단일 세션으로 돌려라. 분할이 불가피하면 컨텍스트를 스킬로 구조화해 손실을 줄여라. 문서 언어(한/영)는 이 두 결정보다 훨씬 작은 변수다.
-5. **모델 단가보다 완주 능력이 먼저다 (M축, EXP-005·006).** Claude Code 백엔드를 저가 Solar로 교체한 두 실험 모두 미완주 — 단 병목은 세대에 따라 이동했다: Solar Pro 3는 자율성 자체(허락-대기 종료·131K 초과)가, Solar Open 2는 자율 TDD 루프까지 확립하고도 스펙 수렴 속도(15 iter에 3/13 파일)가 관문이었다. 두 경우 모두 미완주 상태의 보수 비용 추정이 Opus 완주 비용($6.4)을 넘어, 에이전틱 완주 능력 없이는 단가 우위가 실현되지 않는다. 부수 교훈: "모델 품질 저하"로 보이는 증상이 변환 계층 결함일 수 있다(EXP-006에서 CCR의 SSE 멀티 델타 유실 버그 실증 — Upstage 공식 Anthropic 직결 경로 등장으로 변환 프록시 자체가 불필요해짐).
+5. **모델 단가보다 완주 능력이 먼저다 — 단, 실패의 귀책은 부검해야 안다 (M축, EXP-005·006·007).** Claude Code 백엔드를 저가 Solar로 교체한 두 실험 모두 미완주였으나, EXP-007 트랜스크립트 부검이 서사를 수정했다: EXP-006의 "비용 초과"는 usage 3.07배 과대 계상(JSONL 행 합산)이 만든 착시였고(실측 ~$3.8 < Opus $6.41), 미완주 원인도 수렴 속도 단일 병목이 아니라 ①실험자 글로벌 환경(superpowers 훅·CLAUDE.md)의 주입 지시를 문자대로 따라 iteration의 약 23%를 잠식당한 오염 취약성, ②"커밋하겠습니다" 선언 후 실행 탈락(git commit 0회)·thinking 폭주(출력의 95%, thinking-only 잘림 25회)·과제 이탈 환각이라는 모델 결함의 중첩이었다. 교훈 둘: (a) 에이전틱 완주 능력 없이 단가 우위는 실현되지 않지만, 완주 실패의 원인은 로그 부검 없이 모델 귀책으로 단정하지 마라 — "모델 품질 저하"로 보이는 증상이 변환 계층 결함(EXP-006 CCR 멀티 델타 버그)이나 계측·환경 오염일 수 있다. (b) 세션 JSONL의 usage는 반드시 message.id로 dedup해 집계하라.
 
 ## 실험 라이프사이클
 
