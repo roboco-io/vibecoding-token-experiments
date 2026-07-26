@@ -33,6 +33,7 @@
 | [EXP-002](experiments/002-korean-vs-english/report.md) 한국어 vs 영어 파이프라인 토큰 비교 | L-01: 전 파이프라인 영어 진행이 한국어 대비 billable 토큰을 유의미하게 줄인다 | **보류** |
 | [EXP-003](experiments/003-pte-skills/report.md) PTE + 스킬식 점진 공개 | S-02: 컨텍스트를 스킬 공식 권고(문서 200줄 이하, 스킬로 필요한 것만 로드)로 구조화하면 EXP-001 PTE 대비 billable 30% 이상 감소 | **검증** |
 | [EXP-004](experiments/004-ralph-skills/report.md) Ralph loop + 스킬 구조 | S-03: 단일 세션 ralph에 도메인 계약 스킬을 제공하면 billable이 감소한다 | **보류 (사실상 효과 없음)** |
+| [EXP-005](experiments/005-solar-pro3-backend/report.md) Claude Code × Upstage Solar Pro 3 백엔드 | M-01: Claude Code의 백엔드를 Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다. | **보류** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
 plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -46,6 +47,9 @@ plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 
 **EXP-004 — Ralph loop + 스킬 구조** (보류 (사실상 효과 없음))  
 평균 차 +3.5%(방향은 가설 반대)가 조건 내 변동폭(200K)에 완전히 묻힘 → [보고서](experiments/004-ralph-skills/report.md)
 
+**EXP-005 — Claude Code × Upstage Solar Pro 3 백엔드** (보류)  
+solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조기 중단): 연동 스택은 검증됐으나 headless 자율 루프에서 허락-대기·컨텍스트 초과 실패 모드가 반복되어 완주 궤도에 오르지 못함. → [보고서](experiments/005-solar-pro3-backend/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (실험이 쌓일 때마다 갱신)
@@ -56,6 +60,7 @@ plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 
 2. **점진 공개(스킬)는 멀티 세션 전용 처방이다.** 세션이 전체 컨텍스트의 부분집합만 필요할 때(PTE 태스크 세션) 반복 읽기와 수정 루프를 없애 -39.3% (EXP-003). 반면 전체가 필요한 단일 세션은 스킬을 전량 선로딩해 효과가 없다 (EXP-004).
 3. **에이전트의 작업 궤적 변동은 ±수십만 토큰의 상수 노이즈다.** 동일 조건의 run이 2배까지 벌어진다 (EXP-002 EN 191K–329K, EXP-004 199K–400K). 약 10% 수준의 효과(예: 언어)는 n=2로 판별 불가.
 4. **실용 지침**: 과제가 단일 세션에 들어가면 단일 세션으로 돌려라. 분할이 불가피하면 컨텍스트를 스킬로 구조화해 손실을 줄여라. 문서 언어(한/영)는 이 두 결정보다 훨씬 작은 변수다.
+5. **모델 단가보다 완주 능력이 먼저다 (M축, EXP-005).** Claude Code 백엔드를 20배 싼 Solar Pro 3로 교체해도(claude-code-router 경유, tool calling·usage 계측은 정상 동작) headless 자율 루프에서는 허락-대기 종료·131K 컨텍스트 초과가 반복돼 완주하지 못했다. 미완주 상태의 보수 비용 상한($7.7)이 이미 Opus 완주 비용($6.4)을 넘었다 — 에이전틱 완주 능력이 없으면 단가 우위는 실현되지 않는다.
 
 ## 실험 라이프사이클
 

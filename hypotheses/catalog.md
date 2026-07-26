@@ -16,6 +16,12 @@
 |------|------|------|------|
 | L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 보류 (방향 일치·KO 10%↑이나 run 간 변동에 묻힘, n≥5 필요) | [EXP-002](../experiments/002-korean-vs-english/report.md) |
 
+## M축 — 모델 백엔드
+
+| 코드 | 가설 | 상태 | 실험 |
+|------|------|------|------|
+| M-01 | Claude Code 백엔드를 Upstage Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용(USD)이 Opus 대비 유의미하게(50%↓) 낮다 | 보류 (solar-1 미완주·조기중단 — 허락-대기·컨텍스트 초과 반복, 테스트 0회. 연동 스택 자체는 검증) | [EXP-005](../experiments/005-solar-pro3-backend/report.md) |
+
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
 ### H1 세션 위생

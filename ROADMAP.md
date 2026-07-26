@@ -13,7 +13,8 @@
 - [ ] tokenhabit H-코드 중 낭비 추정치가 큰 패턴부터 A/B 검증
 - [ ] 습관 교정 가이드(전역 CLAUDE.md 규칙)의 실효성 정량화
 
-## Phase 3 — 타 도구 비교
+## Phase 3 — 타 도구·타 모델 비교
 
+- [x] EXP-005: Claude Code × Upstage Solar Pro 3 백엔드 (M-01) — 보류(solar-1 미완주·조기중단), [보고서](experiments/005-solar-pro3-backend/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화
