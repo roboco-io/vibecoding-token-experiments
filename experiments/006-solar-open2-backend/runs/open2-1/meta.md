@@ -11,3 +11,9 @@
 - 중단 상한: 15 iterations / $15 / 8h (EXP-005와 동일)
 - PROMPT.md: EXP-005 solar-1과 byte-identical (diff 검증)
 - Phase 0 파일럿: open2-split 적용 전 0/2 실패(tool call 인자 앞부분 유실), 적용 후 1/1 완주
+
+## 종료
+
+- 종료: 2026-07-26 16:48 — **iteration 1 만에 허위 `.ralph-done` 생성으로 루프 자체 종료** (wall-clock 14분)
+- 결과: **미완주** — 커밋 0회, Hurl 테스트 0회, 서버 미완성(articles 라우터 구현 중이라고 스스로 보고하면서 16:47에 `.ralph-done` Write). PROMPT의 "검증 없이 생성 금지" 지시 위반
+- 실패 모드: **완료 허위 신고** — solar-pro3의 허락-대기와 다른 새 유형. 후속 결정(사용자): open2-1 미완주 기록, 공식 직결 경로로 open2-2 진행

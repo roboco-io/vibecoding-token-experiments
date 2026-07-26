@@ -41,4 +41,7 @@ Upstage가 공식 연동 스크립트(https://console.upstage.ai/claude-upstage.
 
 ## 데이터
 
-- `runs/open2-1/` — 본 run (진행 중)
+| run | 경로 | 결과 |
+|-----|------|------|
+| [open2-1](runs/open2-1/) | CCR 1.0.73 경유 (EXP-005 동일 스택) | **미완주** — iteration 1 만에 허위 `.ralph-done` 생성(커밋 0·테스트 0), 새 실패 모드 "완료 허위 신고" |
+| [open2-2](runs/open2-2/) | 공식 직결 (api.upstage.ai Anthropic 호환, 256K/128K 정합) | 진행 중 |

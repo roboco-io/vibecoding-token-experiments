@@ -1,0 +1,249 @@
+=== iteration 1 start: 2026-07-26 16:35:03 ===
+⚠ claude.ai connectors are disabled because ANTHROPIC_API_KEY or another auth source is set and takes precedence over your claude.ai login · Unset it to load your organization's connectors
+### 1. 리포 상태 파악 및 작업 설정
+
+현재 리포는 초기화 직후 상태(빈 리포, 커밋 없음)입니다. RealWorld 백엔드 API를 처음부터 구현해야 하는 상황입니다.
+
+### 2. 프로젝트 스켈레톤 구축
+
+**초기 설정:**
+- `npm init -y` 로 프로젝트 초기화
+- 필수 패키지 설치: Fastify, Prisma, SQLite, JWT, Swagger, bcrypt, uuid
+- TypeScript 설정 (`tsconfig.json`) 구성
+- `package.json` 스크립트 업데이트: `dev`, `build`, `start`, `prisma:migrate`, `prisma:generate`
+
+**Prisma 스키마 설계:**
+- `User`: id(uuid), email(유일), username(유일), password(해싱), bio, image, 프로필/아티클/코멘트/팔로우/즐겨찾기/태그 관계
+- `Profile`: userId(유일), bio, image, User 1:1 관계
+- `Article`: id(uuid), slug(유일), title, description, body, createdAt, updatedAt, authorId, comments/favorites/tags 관계
+- `Comment`: id(uuid), body, createdAt, updatedAt, articleId, authorId
+- `Follow`: id(uuid), followerId, followedId, createdAt, User 1:N 양방향
+- `Favorite`: id(uuid), articleId, userId, Article/User N:M 관계, 유일 제약
+- `Tag`: id(uuid), name(유일)
+- `ArticleTag`: id(uuid), articleId, tagId, Article/Tag N:M 관계, 유일 제약
+
+### 3. Fastify 서버 스켈레톤 및 미들웨어 구성
+
+**`src/fastify.ts` - Fastify 애플리케이션 팩토리:**
+- CORS, Helmet 보안 미들웨어 등록
+- JWT 플러그인 설정 (시크릿 기반 서명에 서명/검증)
+- Swagger/OpenAPI 문서화 설정 ( `/docs` 에서 UI 제공)
+- JSON 본문 파서 (잘못된 JSON → 400 에러)
+- JWT 인증 미들웨어: `Bearer <token>` 헤더 파싱, 유효하지 않은 토큰은 무시
+- 전역 에러 핸들러 (오류 메시지 JSON 반환)
+
+**`src/types.ts` - 타입 정의:**
+- `ApiRequest`, `ApiReply`, `RouteHandler`, `ApiError`, `AppDependencies` 인터페이스 정의
+- `user.password` 를 응답에서 제외하기 위한 타입 구조
+
+### 4. 라우터 구현
+
+#### 4-1. 인증 라우터 (`src/routes/auth.ts`)
+
+**`POST /api/users` - 회원가입:**
+1. 요청 본문에서 `email`, `username`, `password` 추출
+2. 필수 필드 검증 (없으면 422 반환)
+3. `email` 또는 `username` 으로 기존 유저 조회
+4. 존재하면 422 "User already exists" 반환
+5. `bcrypt.hash(password, 10)` 로 비밀번호 해싱
+6. `prisma.user.create` 로 유저 생성 (include: profile)
+7. JWT 토큰 생성 (`app.jwt.sign`)
+8. `password` 필드를 제외한 유저 객체와 토큰 반환 (201 Created)
+
+**`POST /api/users/login` - 로그인:**
+1. 요청 본문에서 `email`, `password` 추출
+2. 필수 필드 검증 (없으면 422 반환)
+3. `email` 로 유저 조회 (include: profile)
+4. 유저가 없으면 401 "Invalid credentials" 반환
+5. `bcrypt.compare(password, user.password)` 로 비밀번호 검증
+6. 불일치 시 401 반환
+7. JWT 토큰 생성
+8. `password` 필드를 제외한 유저 객체와 토큰 반환 (200 OK)
+
+**핵심 구현 결정:**
+- Fastify의 `app.jwt.sign` 메서드 직접 사용 (비동기 로그인에서 토큰 생성)
+- Prisma `include: { profile: true }` 로 프로필 항상 함께 조회
+- `password` 필드 제외 로직: `const { password: _, ...userWithoutPassword } = user`
+
+#### 4-2. 유저/프로필 라우터 (`src/routes/users.ts`)
+
+**`GET /api/users/:username` - 유저 프로필 조회:**
+1. `req.params.username` 으로 유저 조회 (include: profile)
+2. 없으면 404 "User not found" 반환
+3. `password` 필드 제외한 유저 객체 반환
+
+**`PUT /api/users` - 현재 유저 프로필 업데이트 (JWT 인증 필요):**
+1. `req.user` 없으면 401 반환
+2. `req.body` 에서 `username`, `email`, `password`, `bio`, `image` 추출
+3. 존재하는 필드만 `updateData` 에 추가
+4. `prisma.user.update` 로 유저 업데이트 (include: profile)
+5. `bio` 또는 `image` 가 있으면 `prisma.profile.upsert` 로 프로필 동기화
+   - 존재하면 bio/image 업데이트
+   - 없으면 새 프로필 생성
+6. `password` 필드 제외한 유저 객체 반환
+
+**`GET /api/user` - 현재 로그인 유저 정보 (JWT 인증 필요):**
+1. `req.user` 없으면 401 반환
+2. `req.user.id` 로 유저 조회 (include: profile)
+3. 없으면 404 반환
+4. `password` 필드 제외한 유저 객체 반환
+
+**핵심 구현 결정:**
+- PUT `/api/users` 에서 `username`, `email`, `password` 도 변경 가능 (회원가입 후 정보 수정 시나리오)
+- 비밀번호 변경 시 `bcrypt.hash(password, 10)` 로 재해싱
+- 프로필 동기화는 `prisma.profile.upsert` 로 원자성 보장
+
+### 5. Hurl 테스트 분석 (백그라운드 에이전트)
+
+백그라운드 에이전트가 `realworld-apps/realworld` 리포의 `api/hurl` 디렉토리를 분석 중입니다. 분석 완료 시 13개 파일, 154개 요청의 스펙을 정확히 파악할 예정입니다.
+
+- 분석 대상: https://api.github.com/repos/realworld-apps/realworld/contents/api/hurl
+- 분석 결과: 각 `.hurl` 파일의 HTTP 메서드, 경로, 요청/응답 JSON 스키마, 인증 방식 정리
+
+### 6. 현재 완료 상태 및 다음 단계
+
+**완료된 작업:**
+- ✅ 프로젝트 스켈레톤 (npm, tsconfig, prisma)
+- ✅ Prisma 스키마 설계 및 마이그레이션 (`20260726073631_init`)
+- ✅ Prisma 클라이언트 생성 (`npx prisma generate`)
+- ✅ Fastify 서버 스켈레톤 (`src/fastify.ts`)
+- ✅ 인증 라우터 (`src/routes/auth.ts`) - 회원가입/로그인
+- ✅ 유저/프로필 라우터 (`src/routes/users.ts`) - 4개 엔드포인트
+- ✅ 백그라운드 Hurl 테스트 분석 진행 중
+
+**진행 중인 작업 (백그라운드):**
+- 🔄 Hurl 테스트 스펙 분석 (실시간)
+
+**다음 단계:**
+1. Hurl 테스트 분석 결과 반영하여 정확한 엔드포인트 스펙 확인
+2. 아티클 CRUD 라우터 (`src/routes/articles.ts`) 구현
+3. 코멘트 라우터 (`src/routes/comments.ts`) 구현
+4. 즐겨찾기 라우터 (`src/routes/favorites.ts`) 구현
+5. 태그 라우터 (`src/routes/tags.ts`) 구현
+6. 피드 라우터 (`src/routes/feed.ts`) 구현
+7. 서버 통합 (`src/server.ts`) 및 `npm run dev` 테스트
+8. Hurl 테스트 리포 클론 및 테스트 실행
+9. `.ralph-done` 파일 생성
+
+### 7. 주요 기술적 결정 사항
+
+1. **스키마 설계**: User-Profile 1:1 관계에서 Profile 최초 생성은 `upsert` 로 처리하여 회원가입 시 프로필 자동 생성
+2. **비밀번호 보안**: `bcrypt.hash(password, 10)` 로 해싱, `bcrypt.compare` 로 검증
+3. **JWT 처리**: Fastify의 `@fastify/jwt` 플러그인 활용, `app.jwt.sign` 로 토큰 생성, 미들웨어로 자동 디코딩
+4. **프로필 동기화**: `prisma.profile.upsert` 로 원자적 업데이트 보장
+5. **에러 응답**: `{ "error": "메시지" }` 형식으로 통일 (RealWorld 스펙 준수)
+6. **Prisma 마이그레이션**: `npx prisma migrate dev --name init` 으로 초기 스키마 적용
+
+### 8. 기술 스택 및 아키텍처 요약
+
+```
+┌─────────────────────────────────────────┐
+│           Fastify (HTTP Server)          │
+├─────────────────────────────────────────┤
+│  └─ /api/users        (POST, GET, PUT)  │
+│  └─ /api/users/:username (GET)          │
+│  └─ /api/users/login  (POST)            │
+├─────────────────────────────────────────┤
+│  Routes: auth, users                    │
+├─────────────────────────────────────────┤
+│  Prisma Client (ORM)                    │
+├─────────────────────────────────────────┤
+│  SQLite Database (dev.db)               │
+├─────────────────────────────────────────┤
+│  JWT (인증)                             │
+│  bcrypt (비밀번호 해싱)                 │
+│  Swagger (API 문서화, /docs)            │
+└─────────────────────────────────────────┘
+```
+
+---
+
+### 변경사항 요약
+
+현재까지 생성된 파일:
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/tsconfig.json` - TypeScript 설정
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/package.json` - 프로젝트 설정 및 스크립트
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/prisma/schema.prisma` - Prisma 스키마
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/prisma/migrations/20260726073631_init/migration.sql` - 마이그레이션 SQL
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/src/types.ts` - 타입 정의
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/src/fastify.ts` - Fastify 서버 팩토리
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/src/routes/auth.ts` - 인증 라우터
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/src/routes/users.ts` - 유저/프로필 라우터
+
+생성된 데이터베이스:
+- `/Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-1/prisma/dev.db` - SQLite 데이터베이스
+
+백그라운드 에이전트:
+- Hurl 테스트 스펙 분석 진행 중 (예상 완료 시간: 수 초)
+
+---
+현재 리포 상태를 파악했습니다:
+
+- **빈 리포 상태**: git 커밋이 없고, `node_modules`/`prisma/dev.db`가 생성된 프로젝트 스켈레톤 상태입니다.
+- **핵심 파일**:
+  - `package.json` — 의존성 및 스크립트 구성
+  - `tsconfig.json` — TypeScript 설정
+  - `prisma/schema.prisma` — Prisma 스키마 정의
+  - `prisma/dev.db` — SQLite 데이터베이스 (init 마이그레이션 적용 완료)
+  - `src/types.ts`, `src/fastify.ts`, `src/routes/auth.ts`, `src/routes/users.ts` — 서버 스켈레톤
+
+**현재 진행 상황:**
+1. ✅ 프로젝트 초기화 (`npm init`, package.json, tsconfig.json)
+2. ✅ Prisma 스키마 설계 및 마이그레이션 (`User`, `Profile`, `Article`, `Comment`, `Follow`, `Favorite`, `Tag`, `ArticleTag`)
+3. ✅ Fastify 서버 스켈레톤 (`src/fastify.ts`)
+4. ✅ Auth 라우터 (`src/routes/auth.ts` — 회원가입/로그인)
+5. ✅ User/Profile 라우터 (`src/routes/users.ts` — 프로필 조회/수정)
+6. 🔄 아티클 CRUD 라우터 구현 중 (`src/routes/articles.ts`) — **현재 이 작업을 진행 중**
+7. ⏳ 코멘트/즐겨찾기/태그/피드 라우터 — 미시작
+8. ⏳ Hurl 테스트 리포 벤더링 및 테스트 — 미시작
+9. ⏳ `.ralph-done` 파일 생성 — 미시작
+
+### 현재 작업의 구체적 내용 (아티클 라우터 구현):
+
+`src/routes/articles.ts`에서 다음 엔드포인트들을 구현하고 있습니다:
+
+| HTTP 메서드 | 경로 | 구현 내용 |
+|------------|------|-----------|
+| `POST` | `/api/articles` | 아티클 생성 (JWT 인증, 슬러그 자동 생성, 태그 매핑, 피드 갱신) |
+| `GET` | `/api/articles` | 아티클 목록 조회 (태그 필터링, 저자 필터링, 즐겨찾기 필터링, 페이지네이션, 정렬) |
+| `GET` | `/api/articles/:slug` | 아티클 상세 조회 (태그, 즐겨찾기 상태, 저자 팔로우 상태 포함) |
+| `PUT` | `/api/articles/:slug` | 아티클 수정 (JWT 인증, 작성자 검증, 변경 필드만 업데이트, 태그 매핑 갱신) |
+| `DELETE` | `/api/articles/:slug` | 아티클 삭제 (JWT 인증, 작성자 검증, 태그/즐겨찾기 관계 정리) |
+| `GET` | `/api/articles/feed` | 피드 조회 (팔로우한 유저의 아티클, 최신순, 페이지네이션) |
+
+**미해결 기술적 이슈:**
+
+1. **`GET /api/articles/:slug`의 저자 팔로우 상태 누락** — Hurl 테스트에서 `author.following` 필드를 요구하나, 현재 구현에서 이 필드를 누락했습니다. `prisma.article.findUnique` 후 현재 logged-in user의 팔로우 여부를 별도 쿼리로 확인해야 합니다.
+
+2. **슬러그 충돌** — `POST /api/articles`에서 `stringToSlug(title)`로 슬러그를 자동 생성하는데, 동일한 제목의 아티클이 생성될 경우 슬러그 중복 충돌이 발생합니다. 이 경우 슬러그에 숫자를 추가하여 고유하게 만들어야 합니다 (예: `my-title-1`, `my-title-2`).
+
+3. **`PATCH` 대신 `PUT` 사용** — RealWorld 스펙은 아티클 수정 시 `PUT`을 사용합니다. 현재 PUT 핸들러에서 `article.title`, `article.description`, `article.body`만 업데이트하고 있습니다. Hurl 테스트에서 `PUT /api/articles/...'how-to-train-your-dragon'` 요청에 대해 `updatedAt` 변경과 본문 반영이 제대로 되는지 검증이 필요합니다.
+
+### 다음 행동 계획:
+
+1. **`src/routes/articles.ts` 완성** — 슬러그 충돌 해결, 저자 팔로우 상태 포함, PUT/DELETE 핸들러 검증
+2. **`src/routes/articles.ts`에서 태그 매핑 로직 보완** — `POST /api/articles`에서 태그 생성/매핑, `PUT /api/articles/:slug`에서 태그 갱신
+3. **Hurl 테스트 리포 클론** — `git clone https://github.com/realworld-apps/realworld.git` 및 `api/hurl` 테스트 실행
+4. **라우터 통합** — `src/server.ts`에 모든 라우터 등록
+5. **서버 테스트** — `npm run dev` 로 서버 기동 후 API 엔드포인트 검증
+6. **`.ralph-done` 파일 생성** — 완료 기준 충족 후
+
+### 기술적 주의사항:
+
+- **JWT 인증**: `req.user`에 현재 로그인 유저의 정보가 들어가나, `author.following`을 계산하려면 별도의 Prisma 쿼리가 필요합니다.
+- **슬러그 충돌**: 동일한 제목이 2개 이상 생성될 경우 `slug` 필드에 unique 제약이 있어 `PrismaClientKnownRequestError` 가 발생합니다. 이 경우 슬러그에 `-1`, `-2` 등을 추가해야 합니다.
+- **Hurl 테스트 스펙**: Backon 에이전트가 분석한 결과를 적용하여 정확한 엔드포인트 스펙을 준수해야 합니다. 특히 `author.following`, `tagList`, `favorited`, `favoritesCount` 등 필수 응답 필드의 누락이 없는지 확인이 필요합니다.
+- **페이징**: `GET /api/articles`와 `GET /api/articles/feed`에서 `limit`, `offset` 쿼리 파라미터를 처리하며, 응답은 `articles`, `articlesCount` 필드를 포함해야 합니다.
+
+### 태스크 업데이트 계획:
+
+- `articles-route-implementation` (Task #3) → **in_progress** (현재 작업 중)
+- `comment-favorite-tag-feed-routes` (Task #4) → pending
+- `hurl-test-integration` (Task #5) → pending
+- `server-integration-test` (Task #6) → pending
+- `ralph-done-creation` (Task #7) → pending
+
+작업이 완료되면 각 태스크를 순차적으로 업데이트하겠습니다. 현재 아티클 라우터 구현을 우선 진행 중입니다.
+=== iteration 1 end (exit 0): 2026-07-26 16:48:39 ===
+=== DONE at iteration 1 ===
+=== ralph loop finished: 2026-07-26 16:48:39 ===
