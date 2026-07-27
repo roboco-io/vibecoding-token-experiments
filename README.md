@@ -37,6 +37,7 @@
 | [EXP-006](experiments/006-solar-open2-backend/report.md) Claude Code × Upstage Solar Open 2 백엔드 | M-02: Claude Code의 백엔드를 Solar Open 2로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용이 Opus 대비 유의미하게 낮다. | **보류** |
 | [EXP-007](experiments/007-solar-open2-autopsy/report.md) Solar Open 2 미완주 원인 부검 | M-03: EXP-006(Solar Open 2) 미완주는 수렴 속도 단일 병목이 아니라 복수 실패 요인(모델 행동 결함 · 실험 환경 오염 · 계측 왜곡)의 중첩이다. | **검증** |
 | [EXP-008](experiments/008-solar-open2-clean-run/report.md) Solar Open 2 무오염 클린 run — 완주 검증 | M-04: 오염 제거(격리 설정)·무교란·상한 30 iter 조건에서 solar-open2는 랄프 루프로 RealWorld 백엔드(Hurl 154/154)를 무개입 완주할 수 있다 (과금 배제, 완주 여부 단일 판정). | **검증** |
+| [EXP-009](experiments/009-opus5-ralph-en/report.md) Opus 5 랄프 루프 (EXP-002 en 조건 재실행) | M-05: Opus 5는 EXP-002 en 조건의 랄프 루프에서 단일 세션 완주를 재현하고, Opus 4.x 기준선(en 6–7분·API 38–54회) 대비 동등 이상의 효율을 보인다. | **부분 검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
 plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -61,6 +62,9 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 
 **EXP-008 — Solar Open 2 무오염 클린 run — 완주 검증** (검증)  
 **iteration 10/30에서 완주**: `.ralph-done` 생성 → 하네스 게이트 13/13 파일·154/154 요청 통과 → 실험자 독립 재검증 2회 일치. wall-clock 약 2시간 53분, 무개입·무중단, git 커밋 4회(한국어)까지 이행. 완주 시점이 EXP-006의 상한(15) 안쪽이므로 결정 변수는 상한 증가가 아니라 **환경 오염 제거·무교란**이었다. → [보고서](experiments/008-solar-open2-clean-run/report.md)
+
+**EXP-009 — Opus 5 랄프 루프 (EXP-002 en 조건 재실행)** (부분 검증)  
+완주 조항은 검증(iteration 1 단일 세션, 12분 22초, 게이트 13/13·154/154 + 독립 재검증 2회, 영문 커밋 6개), 효율 조항은 미충족(시간 약 1.8배·API 67회로 4.x 대비 증가 — 단 증가분은 문서화·검증 절차·커밋 규율 등 산출 범위 확대에 대응). → [보고서](experiments/009-opus5-ralph-en/report.md)
 
 <!-- RESULTS:END -->
 

@@ -1,0 +1,24 @@
+=== iteration 1 start: 2026-07-27 17:39:02 ===
+RealWorld 백엔드 API 구현을 완료했습니다.
+
+**완료 기준 검증 결과** (커밋된 트리를 `git clone`한 깨끗한 디렉터리에서 실행):
+
+1. **공식 Hurl 테스트 스위트** — `npm run test:api` → 13개 파일 / 154개 요청 전부 통과 (실패 0)
+2. **단일 명령 기동** — `npm run dev` → `/health` 200, `POST /api/users` 201, `/api/tags` 200
+
+**구성**
+- `src/routes/` — 리소스별 모듈 (users, profiles, articles, comments, tags)
+- `src/lib/` — validation, presenters, JWT, 비밀번호 해싱, slug 생성
+- `src/plugins/auth.ts` — `Token`/`Bearer` 파싱 + `requireAuth` 가드
+- `tests/hurl/` — realworld-apps/realworld에서 벤더링한 공식 스위트
+- `scripts/run-api-tests.sh` — 임시 SQLite DB로 서버를 띄우고 스위트 실행 후 정리
+
+**작업 중 해결한 주요 문제 3가지**
+- `setErrorHandler`를 `await app.register()` 뒤에 호출해 캡슐화된 라우트 컨텍스트가 Fastify 기본 핸들러를 물고 있었음 → 라우트 등록 전으로 이동해 에러 봉투(`{errors:{field:[msg]}}`)가 정상 적용
+- npm 스크립트 PATH에서 동명의 npm 패키지 `hurl`이 진짜 Hurl 바이너리를 가림 → `--version` 문자열로 실제 바이너리를 식별
+- 테스트 러너가 래퍼 서브셸만 kill해 서버가 포트에 남았고, 이후 실행이 낡은 DB를 바라보는 서버로 헬스체크를 통과함 → `exec`로 서버를 직접 띄우고 포트 선점 시 즉시 실패하도록 수정
+
+스펙 준수상 주의가 필요한 동작(등록 201 / 삭제 204 / 중복 409, `articlesCount`는 페이지가 아닌 전체 매칭 수, `bio`·`image`의 빈 문자열 → `null` 정규화, `tagList` 생략 시 보존·`[]` 삭제·`null` 거부, 목록 응답에서 `body` 키 자체 제외, 401 → 404 → 403 순서)은 README에 정리해 두었습니다.
+=== iteration 1 end (exit 0): 2026-07-27 17:51:16 ===
+=== DONE (gate pass) at iteration 1: 2026-07-27 17:51:24 ===
+=== ralph loop finished: 2026-07-27 17:51:24 ===
