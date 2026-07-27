@@ -1,0 +1,19 @@
+=== [48-2] iteration 1 start: 2026-07-27 20:06:12 ===
+Done. The RealWorld backend is fully implemented and both completion criteria are verified.
+
+## Summary
+
+Built the complete RealWorld backend API from an empty repo:
+
+**Stack:** TypeScript + Fastify + Prisma + SQLite, run directly with `tsx` (no build step), JWT auth (`Authorization: Token <jwt>`), scrypt password hashing.
+
+**Implemented endpoints:** registration/login, current-user get/update, profiles (view/follow/unfollow), article CRUD with `tag`/`author`/`favorited` filters and pagination, personalized feed, comments (add/list/delete), favorites, and tags — matching the exact spec contract (error shapes `{"errors":{"field":["msg"]}}`, status codes 201/200/204/401/403/404/409/422, `body` omitted from list responses, bio/image empty→null normalization, tag-preservation rules, password policy on update).
+
+**Verification (both criteria met):**
+1. Vendored the official Hurl suite into `tests/hurl/` (13 files, 154 requests) and ran it — **154/154 pass, 100%**.
+2. Server starts with a single command **`npm run dev`** (its `predev` step runs `prisma generate` + `db push`), verified from a clean database, then re-ran the full suite against that instance — still 100%.
+
+Committed as `9970f97`, and `.ralph-done` was created only after directly running and confirming both criteria.
+
+One note: `.env` (local SQLite path + placeholder `change-me` dev secret) was force-added because a global gitignore excluded it and the app needs `DATABASE_URL` on a fresh clone. If you'd prefer it not tracked, I can swap to a `.env.example` + inline script defaults instead.
+=== [48-2] iteration 1 end (exit 0): 2026-07-27 20:14:24 ===

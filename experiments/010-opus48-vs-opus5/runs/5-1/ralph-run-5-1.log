@@ -1,0 +1,32 @@
+=== [5-1] iteration 1 start: 2026-07-27 19:52:22 ===
+RealWorld 백엔드 API 구현을 완료했습니다.
+
+## 결과
+
+**완료 기준 1 — 공식 Hurl 테스트**: 13/13 파일, 154/154 요청 통과
+
+```
+Executed files:    13
+Executed requests: 154
+Succeeded files:   13 (100.0%)
+Failed files:      0 (0.0%)
+```
+
+**완료 기준 2 — 단일 명령 실행**: `npm run dev` 하나로 Prisma 클라이언트 생성 → SQLite 스키마 동기화 → 서버 기동까지 처리됩니다. `src/generated`와 `prisma/dev.db`를 지운 상태, 그리고 `.env` 파일이 아예 없는 상태에서도 각각 확인했습니다 (등록 요청 `201` 응답).
+
+## 구성
+
+- **스택**: TypeScript · Fastify 5 · Prisma 7(better-sqlite3 드라이버 어댑터) · SQLite · JWT
+- **테스트**: `specs/api/hurl`을 `tests/hurl/`에 vendoring, `tests/run-hurl-tests.sh`가 서버 기동·`/health` 대기·실행까지 담당 (`npm run test:api`)
+
+## 스펙 대응 중 주의한 지점
+
+- 에러 핸들러를 라우트 플러그인 **등록 전에** 설치 — Fastify 자식 컨텍스트는 부팅 시점의 핸들러를 상속하므로, 나중에 `setErrorHandler`를 호출하면 `/api/*` 라우트에 적용되지 않습니다 (초기 6개 파일 실패 원인이었습니다).
+- 인증은 `onRequest` 훅에서 처리 — 본문 파싱 전에 401이 나가야 합니다.
+- `PUT /api/user`에서 `bio`/`image`는 nullable(`null`, `""` → `null`), `username`/`email`/`password`는 둘 다 422.
+- `tagList`: 생략 시 유지, `[]`는 삭제, `null`은 422. 제출 순서는 조인 테이블 `position` 컬럼으로 보존.
+- `articlesCount`는 `limit`/`offset`과 무관한 전체 매칭 수.
+- 아티클 `updatedAt`은 같은 밀리초에 갱신돼도 반드시 증가하도록 보정.
+
+커밋은 스캐폴딩 / 테스트 vendoring / API 구현 / README / `.ralph-done` 5개로 나눴습니다.
+=== [5-1] iteration 1 end (exit 0): 2026-07-27 20:06:05 ===

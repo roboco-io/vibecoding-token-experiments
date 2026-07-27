@@ -1,0 +1,22 @@
+=== [48-3] iteration 1 start: 2026-07-27 20:32:07 ===
+Done. Both completion criteria are verified and the work is committed.
+
+## Summary
+
+Implemented the full RealWorld backend API from an empty repo.
+
+**Stack:** TypeScript (Node) + Fastify + Prisma + SQLite.
+
+**What was built** (`src/`):
+- `lib/` — JWT/bcrypt auth (`Authorization: Token <jwt>`), Prisma client, RealWorld error envelope, response serializers
+- `routes/` — users (register/login/current/update), profiles + follow, article CRUD with `tag`/`author`/`favorited` filters and `limit`/`offset` pagination, personal feed, comments, favorites, tags
+- `app.ts` centralizes error handling; everything served under `/api`
+
+**Spec-accurate details captured from the tests:** 201 on register, 204 on delete, 401 token-missing, 403 forbidden, 404 not-found, 409 duplicate, 422 validation; `body` omitted from list/feed responses; bio/image empty-string→null normalization; NIST password rules on update; unique slugs for duplicate titles; tags preserved when `tagList` is absent.
+
+**Verification (run directly):**
+1. Official Hurl suite vendored into `tests/hurl/` — **13/13 files, 154/154 requests pass** against a clean database.
+2. Single-command startup — `npm run dev` (predev runs `prisma generate` + `db push`) boots and serves requests.
+
+`.ralph-done` created only after both were verified. `PROMPT.md` and `ralph.sh` left untracked/unmodified.
+=== [48-3] iteration 1 end (exit 0): 2026-07-27 20:39:49 ===
