@@ -1,0 +1,144 @@
+Running Hurl tests against http://localhost:8000 with uid=178510151319791
+error: Assert failure
+   --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/articles.hurl:55:0
+    |
+    | GET {{host}}/api/articles
+    | ...
+ 55 | jsonpath "$.articles[0].body" not exists
+    |   actual:   string <Test body content>
+    |   expected: not something
+    |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/articles.hurl (3 request(s) in 127 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/auth.hurl (20 request(s) in 171 ms)
+error: Assert status code
+   --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/comments.hurl:36:6
+    |
+    | POST {{host}}/api/articles/{{slug}}/comments
+    | ...
+ 36 | HTTP 201
+    |      ^^^ actual value is <401>
+    |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/comments.hurl (3 request(s) in 75 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_articles.hurl (20 request(s) in 103 ms)
+error: Assert status code
+   --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_auth.hurl:140:6
+    |
+    | PUT {{host}}/api/user
+    | ...
+140 | HTTP 422
+    |      ^^^ actual value is <500>
+    |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_auth.hurl (12 request(s) in 151 ms)
+error: Assert failure
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_authorization.hurl:46:0
+   |
+   | DELETE {{host}}/api/articles/{{slug}}
+   | ...
+46 | jsonpath "$.errors.article[0]" == "forbidden"
+   |   actual:   string <not found>
+   |   expected: string <forbidden>
+   |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_authorization.hurl (4 request(s) in 147 ms)
+error: Assert status code
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_comments.hurl:52:6
+   |
+   | POST {{host}}/api/articles/{{slug}}/comments
+   | ...
+52 | HTTP 422
+   |      ^^^ actual value is <401>
+   |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_comments.hurl (5 request(s) in 76 ms)
+error: Assert status code
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_profiles.hurl:35:6
+   |
+   | POST {{host}}/api/profiles/unknown-user-{{uid}}/follow
+   | ...
+35 | HTTP 404
+   |      ^^^ actual value is <401>
+   |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/errors_profiles.hurl (5 request(s) in 73 ms)
+error: Assert status code
+   --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/favorites.hurl:31:6
+    |
+    | POST {{host}}/api/articles/{{slug}}/favorite
+    | ...
+ 31 | HTTP 200
+    |      ^^^ actual value is <500>
+    |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/favorites.hurl (3 request(s) in 79 ms)
+error: Assert status code
+   --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/feed.hurl:38:6
+    |
+    | POST {{host}}/api/profiles/feedc_{{uid}}/follow
+    | ...
+ 38 | HTTP 200
+    |      ^^^ actual value is <401>
+    |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/feed.hurl (4 request(s) in 144 ms)
+Success /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/pagination.hurl (7 request(s) in 81 ms)
+error: Assert status code
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/profiles.hurl:47:6
+   |
+   | POST {{host}}/api/profiles/celeb_{{uid}}/follow
+   | ...
+47 | HTTP 200
+   |      ^^^ actual value is <401>
+   |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/profiles.hurl (5 request(s) in 180 ms)
+error: Assert failure
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/tags.hurl:35:0
+   |
+   | GET {{host}}/api/tags
+   | ...
+35 | jsonpath "$.tags" contains "h_{{uid}}"
+   |   actual:   list <[Object(),Object(),Object(),Object(),Object(),Object(),Object(),Object(),Object()]>
+   |   expected: contains string <h_178510151319791>
+   |
+
+error: Assert failure
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/tags.hurl:36:0
+   |
+   | GET {{host}}/api/tags
+   | ...
+36 | jsonpath "$.tags" contains "t_{{uid}}"
+   |   actual:   list <[Object(),Object(),Object(),Object(),Object(),Object(),Object(),Object(),Object()]>
+   |   expected: contains string <t_178510151319791>
+   |
+
+error: Assert failure
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/tags.hurl:37:0
+   |
+   | GET {{host}}/api/tags
+   | ...
+37 | jsonpath "$.tags[0]" isString
+   |   actual:   object <Object()>
+   |   expected: string
+   |
+
+error: Assert failure
+  --> /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/tags.hurl:38:0
+   |
+   | GET {{host}}/api/tags
+   | ...
+38 | jsonpath "$.tags[1]" isString
+   |   actual:   object <Object()>
+   |   expected: string
+   |
+
+Failure /Users/dohyunjung/Workspace/roboco-io/research/realworld-exp006-open2-2/test/hurl/tags.hurl (3 request(s) in 75 ms)
+--------------------------------------------------------------------------------
+Executed files:    13
+Executed requests: 94 (62.6/s)
+Succeeded files:   3 (23.1%)
+Failed files:      10 (76.9%)
+Duration:          1501 ms (0h:0m:1s:501ms)
+

@@ -1,0 +1,22 @@
+=== iteration 1 start: 2026-07-27 18:40:28 ===
+RealWorld 백엔드 구현을 완료했습니다. 저장소는 커밋이 하나도 없는 빈 상태였기에 전체를 처음부터 구축했습니다.
+
+**완료 기준 검증 결과 (clean state 기준, 직접 실행)**
+
+1. Hurl 테스트 — `generated/`, `*.db` 삭제 후 `npm run test:api`: **13 files / 154 requests, 100% 성공, 실패 0**
+2. 단일 명령 기동 — `generated/`, `dev.db` 삭제 후 `npm run dev`: Prisma Client 생성 → SQLite 스키마 동기화 → `http://localhost:3000` 기동, `/health` 및 `GET /api/articles` 200 확인
+
+**구성**
+
+- `src/routes/` — users·profiles·articles·comments·tags 모듈
+- `src/security.ts` — Node 표준 `scrypt` 해싱(네이티브 빌드 없음) + JWT
+- `src/validation.ts` — RealWorld `{"errors": {...}}` 봉투를 만드는 공용 검증기
+- `tests/hurl/` — 공식 스펙 저장소(`realworld-apps/realworld` @ `98f29fb`)에서 그대로 vendoring, 출처는 `tests/hurl/README.md`에 기록
+- `scripts/run-api-tests.sh` — 임시 DB 생성 → 서버 기동 → `/health` 대기 → hurl 실행 → 종료
+
+커밋은 6개(스캐폴딩 / 구현 / 테스트 vendoring / 문서 / 러너 수정 / 완료 기록)로 나눴고, `.ralph-done`은 위 검증을 실제로 마친 뒤 생성했습니다.
+
+주의할 점 하나: 이 환경에는 실제 Hurl을 가리는 동명의 npm 패키지(`~/.asdf/.../bin/hurl`)가 PATH에 있어, 러너가 `--version` 출력으로 진짜 Hurl 바이너리를 골라내도록 처리했습니다.
+=== iteration 1 end (exit 0): 2026-07-27 18:52:07 ===
+=== DONE (gate pass) at iteration 1: 2026-07-27 18:52:14 ===
+=== ralph loop finished: 2026-07-27 18:52:14 ===

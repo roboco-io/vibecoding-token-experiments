@@ -1,0 +1,23 @@
+=== iteration 1 start: 2026-07-27 18:52:36 ===
+RealWorld 백엔드 API 구현을 완료했습니다. 저장소는 빈 상태(커밋 0개)였으므로 전체를 처음부터 만들었습니다.
+
+**완료 기준 검증 결과**
+
+1. **공식 Hurl 테스트 154개 전부 통과** — `realworld-apps/realworld`의 `specs/api/hurl`을 `tests/hurl/`로 vendoring했습니다. `npm test` 실행 시 13개 파일 / 154개 요청 모두 성공. 추가로 데이터가 누적된 단일 DB에 대해 연속 2회 실행해 교차 오염이 없음도 확인했습니다.
+2. **단일 명령 기동** — `npm run dev`. `.env`도 SQLite 파일도 없는 상태에서 검증했고, `predev`가 `.env.example` 복사 → Prisma client 생성 → 스키마 동기화를 처리합니다. `npm run build && npm start` 경로도 확인했습니다.
+
+**구조**: Fastify 5 + Prisma 6 + SQLite. `src/routes/`에 리소스별 라우트, `src/validation.ts`가 스펙이 요구하는 정확한 에러 메시지(`can't be blank`, `has already been taken` 등)를 생성하고, `src/app.ts`의 중앙 에러 핸들러가 401/403/404/409/422로 매핑합니다. 비밀번호는 내장 `scrypt`로 해싱합니다.
+
+**구현 중 주의가 필요했던 스펙 세부사항**
+- `bio`/`image`는 `""`·`null` 모두 `null`로 정규화하되, `username`/`email`은 동일 입력을 422로 거부
+- article 수정 시 `tagList` 부재는 기존 태그 유지, `[]`는 삭제, `null`은 422
+- 목록 응답에서 `body` 필드 제외, 정렬은 `createdAt DESC, id DESC`(동일 밀리초 tie-break)
+
+**환경 관련 참고사항 두 가지**
+- `.env`는 사용자 전역 gitignore가 제외하므로 커밋하지 않고 `.env.example` + 자동 생성 스크립트 방식으로 처리했습니다.
+- 사용자 Node 설치(`~/.asdf/.../bin/hurl`)에 hurl.dev와 무관한 동명 npm 패키지가 있어 `npm test` 안에서 PATH를 가로챘습니다. 테스트 러너가 `--version`으로 진짜 hurl을 판별하도록 수정했습니다(`HURL_BIN`으로 재정의 가능).
+
+검증을 마친 뒤 `.ralph-done`을 생성했습니다. `PROMPT.md`와 `ralph.sh`는 수정하지 않았습니다.
+=== iteration 1 end (exit 0): 2026-07-27 19:01:34 ===
+=== DONE (gate pass) at iteration 1: 2026-07-27 19:01:39 ===
+=== ralph loop finished: 2026-07-27 19:01:39 ===

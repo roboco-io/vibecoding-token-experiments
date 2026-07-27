@@ -16,6 +16,16 @@
 |------|------|------|------|
 | L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 보류 (방향 일치·KO 10%↑이나 run 간 변동에 묻힘, n≥5 필요) | [EXP-002](../experiments/002-korean-vs-english/report.md) |
 
+## M축 — 모델 백엔드
+
+| 코드 | 가설 | 상태 | 실험 |
+|------|------|------|------|
+| M-01 | Claude Code 백엔드를 Upstage Solar Pro 3로 교체하면 동일 과제(RealWorld 백엔드)를 무개입 완주할 수 있고, 완주 시 총비용(USD)이 Opus 대비 유의미하게(50%↓) 낮다 | 보류 (solar-1 미완주·조기중단 — 허락-대기·컨텍스트 초과 반복, 테스트 0회. 연동 스택 자체는 검증) | [EXP-005](../experiments/005-solar-pro3-backend/report.md) |
+| M-02 | Claude Code 백엔드를 Upstage Solar Open 2로 교체하면 동일 과제를 무개입 완주할 수 있고, 완주 시 총비용(USD)이 Opus 대비 유의미하게 낮다 | 보류 (0/2 완주 — open2-2는 15 iter 소진, 독립 검증 3/13 파일. 자율 TDD 루프는 확립. usage·병목 서사는 EXP-007에서 정정) | [EXP-006](../experiments/006-solar-open2-backend/report.md) |
+| M-03 | EXP-006(Solar Open 2) 미완주는 수렴 속도 단일 병목이 아니라 복수 실패 요인(모델 행동 결함·실험 환경 오염·계측 왜곡)의 중첩이다 | 검증 (usage 3.07배 과대 계상 정정 — 실측 ~$3.8 < Opus $6.41, superpowers 훅·글로벌 CLAUDE.md 오염이 3/13 iteration 잠식, 선언-실행 탈락·thinking 폭주·과제 이탈 환각 실증) | [EXP-007](../experiments/007-solar-open2-autopsy/report.md) |
+| M-04 | 오염 제거(격리 설정)·무교란·상한 30 iter 조건에서 solar-open2는 랄프 루프로 RealWorld 백엔드(Hurl 154/154)를 무개입 완주할 수 있다 (과금 배제 — 완주 여부 단일 판정) | 검증 (iteration 10/30에서 완주 — 게이트 13/13·154/154 + 독립 재검증 2회 일치, 커밋 4회 이행. EXP-006 상한 안쪽 완주라 결정 변수는 오염 제거·무교란) | [EXP-008](../experiments/008-solar-open2-clean-run/report.md) |
+| M-05 | Opus 5는 EXP-002 en 조건(영문 프롬프트·기본 환경)의 랄프 루프에서 단일 세션 완주를 재현하고, Opus 4.x 기준선(en 6–7분·API 38–54회) 대비 동등 이상의 효율을 보인다 | 부분 검증 (n=3: 3/3 iteration 1 완주·9–12분·커밋 6–7. 효율 조항 미충족 확정 — 원인은 서빙 아닌 산출량 +62%의 일관 프로파일 변화로 판별) | [EXP-009](../experiments/009-opus5-ralph-en/report.md) |
+
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
 ### H1 세션 위생
