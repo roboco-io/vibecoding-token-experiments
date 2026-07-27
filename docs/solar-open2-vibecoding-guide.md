@@ -1,6 +1,6 @@
 # Solar Open 2는 코딩을 얼마나 잘할까? — AI에게 백엔드 개발을 통째로 맡겨본 실험
 
-> 2026-07-27 실측 실험 기록. 전문 용어를 최대한 풀어 쓴 일반 독자용 요약이며, 원자료와 상세 보고는 [실험 보고서](../experiments/008-solar-open2-clean-run/report.md)에 있다.
+> 2026-07-27 실측 실험 기록. 전문 용어를 최대한 풀어 쓴 일반 독자용 요약이며, 원자료와 상세 보고는 [실험 보고서 (GitHub)](https://github.com/roboco-io/vibecoding-token-experiments/blob/exp-008-solar-open2-clean/experiments/008-solar-open2-clean-run/report.md)에 있다.
 
 ## 한 줄 결론
 
