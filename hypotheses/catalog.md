@@ -27,7 +27,7 @@
 | M-05 | Opus 5는 EXP-002 en 조건(영문 프롬프트·기본 환경)의 랄프 루프에서 단일 세션 완주를 재현하고, Opus 4.x 기준선(en 6–7분·API 38–54회) 대비 동등 이상의 효율을 보인다 | 부분 검증 (n=3: 3/3 iteration 1 완주·9–12분·커밋 6–7. 효율 조항 미충족 확정 — 원인은 서빙 아닌 산출량 +62%의 일관 프로파일 변화로 판별) | [EXP-009](../experiments/009-opus5-ralph-en/report.md) |
 | M-06 | 완전 동일 조건(동일 시점·하네스·프롬프트, 교차 순서 각 n=3)에서 Opus 5의 산출량 확대 프로파일(output·커밋 ↑)이 Opus 4.8 대비 재현되고 양 모델 모두 단일 세션 완주를 유지한다 | 검증 (완주 6/6 iter 1. output 29.6–37.1K vs 41.1–47.9K·커밋 1–2 vs 4–8 분포 비겹침 — 산출량 확대 프로파일은 시점 아티팩트 아닌 실재 세대 특성) | [EXP-010](../experiments/010-opus48-vs-opus5/report.md) |
 | M-07 | Codex CLI(`codex exec`) 하네스에서 gpt-5.6-sol(effort medium)은 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iter 안에 무개입 완주할 수 있다 (과금 배제 — 완주 단일 판정) | 검증 (iteration 1/30 완주 — 게이트 13/13·154/154 + 독립 재검증 2회 일치, 단일 세션 5분 46초·커밋 3회·개입 0) | [EXP-011](../experiments/011-codex-gpt56-sol/report.md) |
-| M-08 | Claude Code 백엔드를 ccr로 gpt-5.6-sol에 연결하면(effort medium) 동일 조건에서 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (선행 게이트: OpenAI API 키 접근 스모크) | 미실험 | |
+| M-08 | Claude Code 백엔드를 ccr로 gpt-5.6-sol에 연결하면(effort medium) 동일 조건에서 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (선행 게이트 통과: OpenAI API 키 스모크 200) | 진행중 | [EXP-012](../experiments/012-ccr-gpt56-sol/README.md) |
 
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
