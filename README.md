@@ -39,6 +39,7 @@
 | [EXP-008](experiments/008-solar-open2-clean-run/report.md) Solar Open 2 무오염 클린 run — 완주 검증 | M-04: 오염 제거(격리 설정)·무교란·상한 30 iter 조건에서 solar-open2는 랄프 루프로 RealWorld 백엔드(Hurl 154/154)를 무개입 완주할 수 있다 (과금 배제, 완주 여부 단일 판정). | **검증** |
 | [EXP-009](experiments/009-opus5-ralph-en/report.md) Opus 5 랄프 루프 (EXP-002 en 조건, n=3) | M-05: Opus 5는 EXP-002 en 조건의 랄프 루프에서 단일 세션 완주를 재현하고, Opus 4.x 기준선(en 6–7분·API 38–54회) 대비 동등 이상의 효율을 보인다. | **부분 검증 (n=3)** |
 | [EXP-010](experiments/010-opus48-vs-opus5/report.md) Opus 4.8 vs Opus 5 순수 A/B (동일 시점, 각 n=3) | M-06: 완전 동일 조건에서 Opus 5의 산출량 확대 프로파일(output·커밋 ↑)이 Opus 4.8 대비 재현되고 양 모델 모두 단일 세션 완주를 유지한다. | **검증** |
+| [EXP-011](experiments/011-codex-gpt56-sol/report.md) Codex CLI × gpt-5.6-sol 리얼월드 백엔드 완주 검증 | M-07: Codex CLI(`codex exec`) 하네스에서 gpt-5.6-sol(effort medium)은 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다. | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
 plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -69,6 +70,9 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 
 **EXP-010 — Opus 4.8 vs Opus 5 순수 A/B (동일 시점, 각 n=3)** (검증)  
 완주 6/6 (전 run iteration 1, 게이트 13/13·154/154). 사전 등록 지표 모두 충족: **output 토큰 분포 비겹침**(4.8: 29.6–37.1K vs 5: 41.1–47.9K, +37% 평균) · **git 커밋 분포 비겹침**(1–2개 vs 4–8개), 방향 EXP-009와 동일(5 > 4.8). 세대 차는 시점·계측 아티팩트가 아닌 실재 프로파일로 확정. → [보고서](experiments/010-opus48-vs-opus5/report.md)
+
+**EXP-011 — Codex CLI × gpt-5.6-sol 리얼월드 백엔드 완주 검증** (검증)  
+**iteration 1에서 완주** (게이트 13/13·154/154 + 독립 재검증 2회 일치, codex exec 5분 46초·세션 1개·커밋 3회, 무개입). → [보고서](experiments/011-codex-gpt56-sol/report.md)
 
 <!-- RESULTS:END -->
 
