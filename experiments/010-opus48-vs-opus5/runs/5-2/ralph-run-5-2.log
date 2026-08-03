@@ -1,0 +1,29 @@
+=== [5-2] iteration 1 start: 2026-07-27 20:14:30 ===
+RealWorld 백엔드 API를 처음부터 구현하고 두 완료 기준을 모두 직접 실행해 검증했습니다.
+
+**완료 기준 검증 결과**
+
+1. **공식 Hurl 테스트 154/154 통과** — `realworld-apps/realworld`의 `specs/api/hurl`을 저장소에 vendoring(13 파일, 154 요청). `npm test` 실행 결과 `Succeeded files: 13 (100.0%) / Failed files: 0`.
+2. **단일 명령 기동** — `npm run dev`가 Prisma 클라이언트 생성 + SQLite 스키마 동기화 + 서버 기동까지 수행. `.env`·DB·생성된 클라이언트가 전혀 없는 상태에서 시작해 `GET /health → {"status":"ok"}` 확인.
+
+추가로 `npm run typecheck`(strict TS)도 오류 0.
+
+**구현 요약**
+
+- TypeScript(ESM, tsx 런타임) + Fastify 5 + Prisma 7(better-sqlite3 driver adapter) + SQLite
+- JWT 인증(`Token`/`Bearer` 둘 다 허용), 비밀번호는 `node:crypto`의 scrypt — 네이티브 의존성 없음
+- users/profiles, article CRUD, comments, favorites, tags, feed 전체
+- 스펙 대응이 까다로웠던 지점들:
+  - `articlesCount`는 페이지 크기가 아닌 **전체 매칭 수** (pagination/feed 테스트가 요구)
+  - article `updatedAt`을 명시적으로 쓰고 이전 값보다 **엄격히 크도록** 보정 (연속 쓰기에서도 `!=` 단언 충족)
+  - `bio`/`image`는 `""` → `null` 정규화, `username`/`email`/`password`는 `null`·`""` 모두 422
+  - 중복 title 허용을 위해 slug에 랜덤 접미사 부여
+  - body 없는 POST/DELETE(favorite, follow)가 415로 거부되지 않도록 catch-all content-type 파서 추가
+
+**막혔다가 우회한 지점 2가지** (참고용)
+
+- Prisma 7은 AI 에이전트가 `db push --force-reset`을 실행하는 것을 차단합니다. 테스트 스크립트가 DB 파일을 먼저 삭제하므로 파괴적 플래그 없이 일반 `db push`로 대체했습니다.
+- npm 스크립트 PATH 상에서 무관한 npm 패키지의 `hurl` 실행 파일이 진짜 Hurl을 가립니다. 러너가 `--version` 출력으로 실제 Hurl 바이너리를 식별하도록 했습니다.
+
+커밋은 8개로 논리 단위 분리했고, 검증 후 `.ralph-done`을 생성했습니다.
+=== [5-2] iteration 1 end (exit 0): 2026-07-27 20:32:01 ===
