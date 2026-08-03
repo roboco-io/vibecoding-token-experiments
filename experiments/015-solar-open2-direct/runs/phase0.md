@@ -13,7 +13,7 @@
 
 ## ② 프롬프트 diff
 
-- `diff ~/ralph-exp010/PROMPT.md ~/ralph-exp015/PROMPT.md` → **diff 0 (byte-identical)**. (EXP-008의 프롬프트는 정본 이전 버전으로 상이 — 동일 모델 양 스택 비교를 정성 참조로 한정하는 사유, 설계 등록)
+- `diff ~/ralph-exp010/PROMPT.md ~/ralph-exp015/PROMPT.md` → **diff 0 (byte-identical)**. (EXP-008의 프롬프트는 정본 이전 버전으로 상이 — EXP-008과의 비교를 정성 참조로 한정하는 사유, 설계 등록)
 
 ## ③ measure.sh 치환본·포트
 

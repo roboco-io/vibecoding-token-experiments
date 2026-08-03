@@ -2,7 +2,7 @@
 
 ## 배경
 
-EXP-012에서 Claude Code는 ccr(claude-code-router) 변환 계층을 거쳐 gpt-5.6-sol로 iteration 11 완주를 기록했다(스트림 스톨 1건 하네스 복구). 본 실험은 **변환 계층 없이** DashScope의 Anthropic 호환 엔드포인트로 qwen3.8-max(2026-08-03 출시)를 Claude Code에 직결한다. Claude Code 하네스에 비-Anthropic 모델을 연결하는 두 번째 스택(기존 ccr → 신규 직결)이자, 직결 방식의 첫 데이터 포인트다.
+EXP-012에서 Claude Code는 ccr(claude-code-router) 변환 계층을 거쳐 gpt-5.6-sol로 iteration 11 완주를 기록했다(스트림 스톨 1건 하네스 복구). 본 실험은 **변환 계층 없이** DashScope의 Anthropic 호환 엔드포인트로 qwen3.8-max(2026-08-03 출시)를 Claude Code에 직결한다. Claude Code 하네스에 비-Anthropic 모델을 연결하는 두 번째 스택(기존 ccr → 신규 직결)이자, 직결 방식의 첫 데이터 포인트다. (정정 2026-08-04: 직결 자체는 EXP-006 open2-2·EXP-008이 Upstage 공식 직결로 먼저 사용했다 — 본 실험은 DashScope 직결의 첫 적용이자, 정본 프롬프트·표준 하네스 조건에서의 첫 직결 데이터 포인트로 정정한다.)
 
 ## 가설
 
