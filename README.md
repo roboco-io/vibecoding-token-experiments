@@ -41,6 +41,7 @@
 | [EXP-010](experiments/010-opus48-vs-opus5/report.md) Opus 4.8 vs Opus 5 순수 A/B (동일 시점, 각 n=3) | M-06: 완전 동일 조건에서 Opus 5의 산출량 확대 프로파일(output·커밋 ↑)이 Opus 4.8 대비 재현되고 양 모델 모두 단일 세션 완주를 유지한다. | **검증** |
 | [EXP-011](experiments/011-codex-gpt56-sol/report.md) Codex CLI × gpt-5.6-sol 리얼월드 백엔드 완주 검증 | M-07: Codex CLI(`codex exec`) 하네스에서 gpt-5.6-sol(effort medium)은 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다. | **검증** |
 | [EXP-012](experiments/012-ccr-gpt56-sol/report.md) Claude Code × gpt-5.6-sol 백엔드(ccr) 리얼월드 백엔드 완주 검증 | M-08: Claude Code 백엔드를 ccr로 gpt-5.6-sol에 연결하면(reasoning effort medium) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다. | **검증** |
+| [EXP-013](experiments/013-qwen38max-direct/report.md) Claude Code × qwen3.8-max 직결(ANTHROPIC_BASE_URL) 리얼월드 백엔드 완주 검증 | M-09: Claude Code를 DashScope Anthropic 호환 엔드포인트로 qwen3.8-max에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드(Hurl 13/13·154/154)를 상한 30 iteration 안에 무개입 완주할 수 있다. | **검증** |
 
 **EXP-001 — Ralph loop vs Plan-then-execute** (기각 (반증))  
 plan-then-execute가 billable 기준 **약 8.7배 더 많은** 토큰을 사용 → [보고서](experiments/001-ralph-vs-plan-then-execute/report.md)
@@ -78,6 +79,9 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 **EXP-012 — Claude Code × gpt-5.6-sol 백엔드(ccr) 리얼월드 백엔드 완주 검증** (검증)  
 **iteration 11/30에서 완주** (게이트 13/13·154/154 + 독립 재검증 2회 일치, 총 58분·커밋 11회). 단 iteration 2에서 스트림 스톨 1건에 하네스 수준 개입(프로세스 종료로 iteration 경계 복구, 모델 산출물 불개입)이 있었다 — 아래 프로토콜 이슈 참조. → [보고서](experiments/012-ccr-gpt56-sol/report.md)
 
+**EXP-013 — Claude Code × qwen3.8-max 직결(ANTHROPIC_BASE_URL) 리얼월드 백엔드 완주 검증** (검증)  
+**iteration 1에서 완주** (게이트 13/13·154/154 + 독립 재검증 2회 일치, 15분 5초·커밋 4회·개입 0, 직결 스택 트러블슈팅 0건). → [보고서](experiments/013-qwen38max-direct/report.md)
+
 <!-- RESULTS:END -->
 
 ### 종합 인사이트 (실험이 쌓일 때마다 갱신)
@@ -90,6 +94,7 @@ solar-1 미완주(테스트 실행 0회·커밋 0회, 6/15 iteration 시점 조�
 4. **실용 지침**: 과제가 단일 세션에 들어가면 단일 세션으로 돌려라. 분할이 불가피하면 컨텍스트를 스킬로 구조화해 손실을 줄여라. 문서 언어(한/영)는 이 두 결정보다 훨씬 작은 변수다.
 5. **"모델이 완주 못 한다"의 지배 요인은 실험 환경 오염이었다 (M축, EXP-005–008).** Solar 백엔드 4부작의 서사: EXP-005(자율성 부재로 미완주) → EXP-006(TDD 확립했으나 3/13 미완주) → EXP-007(부검: usage 3.07배 과대 계상 착시 + superpowers 훅·글로벌 CLAUDE.md 오염이 iteration 23% 잠식 + 모델 결함) → **EXP-008(오염 제거 클린 run에서 iteration 10 만에 13/13·154/154 완주, 커밋 4회까지 이행)**. 동일 모델·동일 PROMPT·동일 env에서 격리 하나로 판정이 뒤집혔고, 완주 시점이 EXP-006 상한 안쪽이라 상한 증가는 기여하지 않았다. 교훈 셋: (a) **자율 루프 실험에서 실험자 로컬 환경(훅·전역 설정) 격리는 전제 조건**이다 — 이를 어기면 "모델 능력" 측정이 "오염 순응도" 측정이 된다. (b) 완주 실패의 원인은 로그 부검 없이 모델 귀책으로 단정하지 마라 — 변환 계층 결함(CCR 멀티 델타 버그)·계측 오류(usage 행 합산, message.id dedup 필수)·환경 오염일 수 있다. (c) 모델 내재 결함(허락-대기 1회, thinking 94%, 회차 경계 실행 불가 상태)은 잔존해도 랄프 루프의 반복 구조가 흡수 가능하다. 비용 우위 판정은 여전히 단가 미공개로 불능.
 6. **랄프 루프 프로토콜은 하네스 독립적으로 이식되고, 완주는 모델·궤적은 하네스가 결정했다 (EXP-011/012 쌍).** 동일 PROMPT·게이트·모델(gpt-5.6-sol, effort medium)로 하네스만 바꾼 쌍 실험에서 둘 다 무개입 완주 — Codex CLI는 iteration 1·5분 46초·단일 파일 436줄·커밋 3회, Claude Code(ccr 경유)는 iteration 11·58분·모듈형 11파일·커밋 11회. "가장 중요한 한 조각" 지시를 Codex는 완주까지로, Claude Code 쪽은 문자 그대로 한 조각으로 해석해 소형 iteration을 랄프 루프가 흡수했다. 격리 원칙(전용 CODEX_HOME/CLAUDE_CONFIG_DIR)과 iteration별 외부 채점 게이트는 도구를 가리지 않고 성립. 도구 간 토큰 효율 비교는 계측 방식(rollout 누계 vs ccr 탭 vs ccusage) 표준화가 선행 과제다.
+7. **서드파티 모델 연결은 변환 계층(ccr)보다 Anthropic 호환 엔드포인트 직결이 구조적으로 우월하다 (EXP-013).** qwen3.8-max를 `ANTHROPIC_BASE_URL` 직결로 Claude Code에 연결하자 ccr 스택에서 반복된 실패 모드(usage 유실→별도 탭 구축, transformer 체인 조정, 스트림 스톨)가 전부 소멸 — Phase 0 무조정 통과, iteration 1 완주(15분 5초), 세션 jsonl usage·context caching 정상 동작. 직결은 계측도 Claude 표준 경로(jsonl + message.id dedup)로 회귀시켜 6번의 표준화 선행 과제를 부분 해소한다. 단 EXP-012와는 모델이 달라(gpt-5.6-sol vs qwen3.8-max) 스택 효과와 모델 효과가 교락 — 제공자가 Anthropic 호환 엔드포인트를 제공하면 직결을 기본 선택지로 삼되, 스택 간 정량 비교는 동일 모델 실험이 필요하다.
 
 ## 실험 라이프사이클
 
