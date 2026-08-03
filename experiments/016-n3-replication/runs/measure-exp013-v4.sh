@@ -3,7 +3,7 @@
 # stdout: "succ_files,exec_reqs"
 # v3 대비: 리포 소속 판정을 command 경로 grep + 프로세스 CWD로 확장
 #   (npx가 글로벌 캐시에서 실행돼 command에 리포 경로가 없는 경우 — EXP-015 iter 2 오검의 원인)
-BASE="$HOME/ralph-exp015"
+BASE="$HOME/ralph-exp013"
 REPO="$1"
 
 # 프로세스가 리포 소속인지: command에 리포 경로 포함 OR CWD가 리포 안
