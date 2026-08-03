@@ -25,5 +25,7 @@
 - [x] EXP-012: Claude Code 백엔드 × gpt-5.6-sol (ccr, M-08, n=1) — 검증(iteration 11 완주·58분·커밋 11회, 스톨 1건 하네스 복구), [보고서](experiments/012-ccr-gpt56-sol/report.md)
 - [x] EXP-013: Claude Code × qwen3.8-max 직결(ANTHROPIC_BASE_URL) 완주 검증 (M-09, n=1) — 검증(iteration 1 완주·15분 5초·커밋 4회, 직결 트러블슈팅 0건·usage 정상 기록), [보고서](experiments/013-qwen38max-direct/report.md)
 - [x] EXP-014: Claude Code × kimi-k3 직결(ANTHROPIC_BASE_URL) 완주 검증 (M-10, n=1) — 검증(iteration 1 완주·21분 18초·커밋 4회, EXP-013 하네스 env 치환만으로 동작), [보고서](experiments/014-kimi-k3-direct/report.md)
+- [x] EXP-015: Claude Code × solar-open2 직결(ANTHROPIC_BASE_URL) 완주 검증 (M-11, n=1, EXP-008 직결 완주의 정본 조건 재현) — 검증(iteration 2 완주·58분 15초, 게이트 오검 1건 v4 수정·재채점 일치), [보고서](experiments/015-solar-open2-direct/report.md)
+- [ ] EXP-016: n=1 완주 조건 3종(EXP-011/013/014) 재현성 확충, 각 n=3 (M-12) — 진행중, [설계](experiments/016-n3-replication/README.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화
