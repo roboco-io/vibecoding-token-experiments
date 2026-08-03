@@ -23,5 +23,6 @@
 - [x] EXP-010: Opus 4.8 vs 5 순수 A/B (M-06, 동시점 교차 각 n=3) — 검증(6/6 완주, output·커밋 분포 비겹침으로 프로파일 실재 확정), [보고서](experiments/010-opus48-vs-opus5/report.md)
 - [x] EXP-011: Codex CLI × gpt-5.6-sol 완주 검증 (M-07, n=1) — 검증(iteration 1 완주·독립 재검증 일치, 5분 46초·커밋 3회), [보고서](experiments/011-codex-gpt56-sol/report.md)
 - [x] EXP-012: Claude Code 백엔드 × gpt-5.6-sol (ccr, M-08, n=1) — 검증(iteration 11 완주·58분·커밋 11회, 스톨 1건 하네스 복구), [보고서](experiments/012-ccr-gpt56-sol/report.md)
+- [ ] EXP-013: Claude Code × qwen3.8-max 직결(ANTHROPIC_BASE_URL) 완주 검증 (M-09, n=1) — 진행중, [설계](experiments/013-qwen38max-direct/README.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화
