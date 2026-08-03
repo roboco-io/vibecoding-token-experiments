@@ -30,6 +30,7 @@
 | M-08 | Claude Code 백엔드를 ccr로 gpt-5.6-sol에 연결하면(effort medium) 동일 조건에서 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (선행 게이트 통과: OpenAI API 키 스모크 200) | 검증 (iteration 11/30 완주 — 게이트 13/13·154/154 + 독립 재검증 2회 일치, 58분·커밋 11회. 각주: iter 2 스트림 스톨 1건 하네스 수준 복구) | [EXP-012](../experiments/012-ccr-gpt56-sol/report.md) |
 | M-09 | Claude Code를 DashScope Anthropic 호환 엔드포인트로 qwen3.8-max에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (과금 배제 — 완주 단일 판정. 선행 게이트 통과: intl 엔드포인트 스모크 200) | 검증 (iteration 1/30 완주 — 게이트 13/13·154/154 + 독립 재검증 2회 일치, 15분 5초·커밋 4회·개입 0. 직결 스택 트러블슈팅 0건, 세션 jsonl usage 정상 기록) | [EXP-013](../experiments/013-qwen38max-direct/report.md) |
 | M-10 | Claude Code를 Moonshot Anthropic 호환 엔드포인트로 kimi-k3에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (과금 배제 — 완주 단일 판정. 선행 게이트 통과: 국제판 엔드포인트 스모크 200) | 검증 (iteration 1/30 완주 — 게이트 13/13·154/154 + 독립 재검증 2회 일치, 21분 18초·커밋 4회·개입 0. EXP-013 하네스 env 3요소 치환만으로 동작 — 직결 방법 재사용성 확인) | [EXP-014](../experiments/014-kimi-k3-direct/report.md) |
+| M-11 | Claude Code를 Upstage Anthropic 호환 엔드포인트로 solar-open2에 직결하면(thinking 기본값) 격리·무교란 랄프 루프로 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (과금 배제 — 완주 단일 판정. 선행 게이트 통과: Bearer 스모크 200, x-api-key는 401) | 진행중 | [EXP-015](../experiments/015-solar-open2-direct/README.md) |
 
 ## H축 — 토큰 습관 ([tokenhabit](https://github.com/epoko77-ai/tokenhabit) 카탈로그 기반)
 
