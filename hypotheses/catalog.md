@@ -16,7 +16,7 @@
 |------|------|------|------|
 | L-01 | 동일 과제를 전 파이프라인(프롬프트+산출 문서·주석·커밋·보고) 영어로 진행하면 한국어 대비 billable 토큰이 유의미하게 적다 | 보류 (방향 일치·KO 10%↑이나 run 간 변동에 묻힘, n≥5 필요) | [EXP-002](../experiments/002-korean-vs-english/report.md) |
 | L-02 | qwen3.8-max·kimi-k3(직결)는 한국어 정본 프롬프트(전 산출물 한국어 지시) 조건에서도 랄프 루프로 RealWorld 백엔드를 상한 30 iter 안에 무개입 완주할 수 있다 (각 n=3, 완주율 판정·과금 배제) | 검증 (6/6 iter 1 완주 — 게이트+재검증 일치, 커밋·README 전수 한국어·언어 이탈 0. qwen은 ko에서 +48% 느림(방향성 기록), kimi는 en 변동 범위 내) | [EXP-017](../experiments/017-ko-condition/report.md) |
-| L-03 | 네이티브 Opus 4.8·Opus 5(Claude Code)와 gpt-5.6-sol(Codex CLI)은 한국어 정본 프롬프트 조건에서도 랄프 루프로 RealWorld 백엔드를 상한 iter 안에 무개입 완주할 수 있다 (각 n=3, 완주율 판정·과금 배제) | 진행중 (EXP-019) | [EXP-019](../experiments/019-ko-native-codex/README.md) |
+| L-03 | 네이티브 Opus 4.8·Opus 5(Claude Code)와 gpt-5.6-sol(Codex CLI)은 한국어 정본 프롬프트 조건에서도 랄프 루프로 RealWorld 백엔드를 상한 iter 안에 무개입 완주할 수 있다 (각 n=3, 완주율 판정·과금 배제) | 검증 (9/9 iter 1 완주 — 게이트+재검증 일치, 커밋·README 전수 한국어·언어 이탈 0, 영어권 모델 포함. 시간·커밋·output 전부 EN 분포와 겹침 — qwen ko +48%는 예외 사례로 판명. 언어 반전 누적 15/15 iter 1) | [EXP-019](../experiments/019-ko-native-codex/report.md) |
 
 ## M축 — 모델 백엔드
 
