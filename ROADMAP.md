@@ -30,6 +30,6 @@
 - [x] EXP-017: qwen3.8-max·kimi-k3 한국어 조건 완주 검증 (L-02, 각 n=3) — 검증(6/6 iter 1, 언어 준수 전수, qwen ko +48% 시간은 방향성 기록), [보고서](experiments/017-ko-condition/report.md)
 - [x] EXP-018: solar-open2 직결 재현성 확충, n=3 (M-13, EXP-015 +2 run) — 보류(제공자 엔드포인트 회수로 검증 불가, EXP-015가 마지막 시점 기록), [보고서](experiments/018-solar-n3-replication/report.md)
 - [x] EXP-019: 네이티브 Opus 4.8·5 + Codex×gpt-5.6-sol 한국어 조건, 각 n=3 (L-03) — 검증(9/9 iter 1, 언어 준수 전수·EN 분포와 겹침, 언어 반전 누적 15/15), [보고서](experiments/019-ko-native-codex/report.md)
-- [ ] EXP-020: Claude Code × solar-pro4 직결 완주 검증, n=3 (M-14, 엔드포인트 복구 확인 후) — 진행중, [설계](experiments/020-solar-pro4-direct/README.md)
+- [x] EXP-020: Claude Code × solar-pro4 직결 완주 검증, n=3 (M-14, 엔드포인트 복구 확인 후) — 검증(3/3 완주, 신고 iter 3→2→1, 게이트 오검 1건 소급 재채점으로 유효 완주 확정, 캐시 0·유효 119–258분 최장 프로파일), [보고서](experiments/020-solar-pro4-direct/report.md)
 - [ ] Codex, Cursor 등 동일 과제 기반 도구 간 토큰 효율 비교
 - [ ] 도구별 측정 방법 표준화
