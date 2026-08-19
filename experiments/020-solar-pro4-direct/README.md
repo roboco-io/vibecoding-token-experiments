@@ -18,6 +18,13 @@ Upstage가 2026-08-05 solar-open2 hosted API와 Anthropic 호환 경로를 회�
 - **선행 게이트 통과 (2026-08-19)**: `/v1/messages` 스모크 200(Anthropic 형식·usage 정상, 모델 `solar-pro4-260806`), Claude Code 직결 스모크 `SMOKE-OK`, 공식 스크립트 `DEFAULT_MODEL=solar-pro4` 확인
 - **Phase 0 하네스 조정 (iteration 1 완료 전, 사전 등록)**: 현 Claude Code 버전이 미인식 모델에 200k 창 가정·auto-compact 강제를 신규 도입한 것을 첫 기동에서 확인 — EXP-013/014/015 직결은 모두 이 강제가 없던 구버전 동작이므로, 동형성을 위해 `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`(구동작 복원)을 driver env에 추가하고 완주 데이터 없이 재기동. 부분 산출물은 폐기
 
+## 실행 중 게이트 오검 사건 (2026-08-19, pro4-1 iter 1–11)
+
+- **증상**: pro4-1 iter 3~11의 `.ralph-done` 신고 9건이 전부 `hurl 0,0`으로 기각됨.
+- **원인**: 2026-08-08 npm 글로벌에 설치된 무관 패키지 `@hurl/cli@1.0.5`가 asdf shim `~/.asdf/shims/hurl`을 생성, 진짜 Hurl 8.0.1(`/opt/homebrew/bin/hurl`)을 PATH에서 가림. measure.sh가 `hurl`을 상대 호출해 "Unknown arguments" 실패 → 항상 0,0. 서버 기동·포트 탐지는 정상이었음(v4 로직 무결).
+- **조치**: iter 12 진행 중 measure.sh에 `HURL_BIN=/opt/homebrew/bin/hurl` 절대 경로 고정 + BASE 경로 오기(ralph-exp015 → ralph-exp020, 채점 파일은 md5 동일해 영향 없음) 수정. **모델 환경은 무개입 유지** — 수정은 채점기만.
+- **판정 영향**: iter 3~11 기각은 하네스 귀책. 완료 후 iter 3 시점 HEAD를 소급 재채점해 최초 유효 완주 iteration을 확정하고, 하네스 개입(.ralph-done 9회 삭제)이 루프를 연장시킨 사실을 보고서에 명기한다. EXP-015 게이트 오검(v4 수정)에 이은 두 번째 채점기 결함 사례.
+
 ## 리스크
 
 - solar 계열은 완주 시간이 길었다(open2 58분) — pro4는 미지, run당 상한 30 iter 내 관찰만
