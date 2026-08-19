@@ -16,6 +16,7 @@ Upstage가 2026-08-05 solar-open2 hosted API와 Anthropic 호환 경로를 회�
 - **채점**: measure v4 게이트 + 완료 후 독립 재검증 2회. 실행: 순차 3 run(pro4-1..3), run별 세션 격리(message.id dedup)
 - **판정 기준 (사전 등록)**: 검증(3/3 완주) / 부분 검증(1–2/3 — run별 사유 보고) / run 단위 보류(모델 외적 장애)
 - **선행 게이트 통과 (2026-08-19)**: `/v1/messages` 스모크 200(Anthropic 형식·usage 정상, 모델 `solar-pro4-260806`), Claude Code 직결 스모크 `SMOKE-OK`, 공식 스크립트 `DEFAULT_MODEL=solar-pro4` 확인
+- **Phase 0 하네스 조정 (iteration 1 완료 전, 사전 등록)**: 현 Claude Code 버전이 미인식 모델에 200k 창 가정·auto-compact 강제를 신규 도입한 것을 첫 기동에서 확인 — EXP-013/014/015 직결은 모두 이 강제가 없던 구버전 동작이므로, 동형성을 위해 `CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1`(구동작 복원)을 driver env에 추가하고 완주 데이터 없이 재기동. 부분 산출물은 폐기
 
 ## 리스크
 
