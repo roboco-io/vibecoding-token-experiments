@@ -1,6 +1,6 @@
 # ko-1 실행 기록
 
-- 작업 리포: `~/Workspace/roboco-io/research/realworld-exp002-ko-1` (빈 저장소, CLAUDE.md 없음)
+- 작업 리포: `~/Workspace/roboco-io/research/_experiments/realworld-exp002-ko-1` (빈 저장소, CLAUDE.md 없음)
 - 조건: KO (전 파이프라인 한국어), 프롬프트 [prompts/ko.md](../../prompts/ko.md)
 - 실행 방식: headless Ralph loop (`env -u ANTHROPIC_API_KEY claude --model opus -p`, 최대 15회, `.ralph-done` 마커)
 - 시작 시각: 2026-07-21 13:15:14

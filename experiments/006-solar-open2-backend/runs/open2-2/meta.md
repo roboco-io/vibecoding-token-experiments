@@ -1,7 +1,7 @@
 # open2-2 run meta
 
 - 시작: 2026-07-26 17시경 (ralph-run.log 1행이 정본)
-- 작업 리포: ~/Workspace/roboco-io/research/realworld-exp006-open2-2
+- 작업 리포: ~/Workspace/roboco-io/research/_experiments/realworld-exp006-open2-2
 - 경로: **공식 직결** — `ANTHROPIC_BASE_URL=https://api.upstage.ai` (Anthropic 호환 네이티브, 변환 프록시 없음). 공식 claude-upstage.sh의 `set_claude_env`를 그대로 재현
 - 모델: solar-open2 (모든 모델 슬롯 매핑: MODEL/SMALL_FAST/HAIKU/SONNET/OPUS)
 - 한도 정합: `CLAUDE_CODE_AUTO_COMPACT_WINDOW=262144` (서빙 256K), `CLAUDE_CODE_MAX_OUTPUT_TOKENS=131072` (출력 128K)

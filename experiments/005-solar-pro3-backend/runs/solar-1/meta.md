@@ -1,7 +1,7 @@
 # solar-1 run meta
 
 - 시작: 2026-07-26 10:47:43
-- 작업 리포: ~/Workspace/roboco-io/research/realworld-exp005-solar-1
+- 작업 리포: ~/Workspace/roboco-io/research/_experiments/realworld-exp005-solar-1
 - 경로: claude-code-router 1.0.73 (:3456) → Upstage API (OpenAI 호환)
 - 모델: solar-pro3 (해석: solar-pro3-260323) / small-fast: solar-mini
 - transformer: solar-fix(reasoning→reasoning_effort=high) + streamoptions(SSE usage 전달)

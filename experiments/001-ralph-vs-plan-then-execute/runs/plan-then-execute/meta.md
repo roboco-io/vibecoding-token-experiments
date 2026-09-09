@@ -1,6 +1,6 @@
 # plan-then-execute 실행 기록
 
-- 작업 리포: `~/Workspace/roboco-io/research/realworld-exp001-pte` (빈 저장소, CLAUDE.md 없음)
+- 작업 리포: `~/Workspace/roboco-io/research/_experiments/realworld-exp001-pte` (빈 저장소, CLAUDE.md 없음)
 - 모델: Claude Opus (`env -u ANTHROPIC_API_KEY claude --model opus -p`, headless)
 - 실행 방식: 계획 세션 1회 → `docs/plan.md` + `docs/tasks/NN-*.md` 산출 → 태스크당 새 세션 (의존성 없는 태스크는 병렬) → 검증 세션. 세션 간 컨텍스트는 문서로만 전달. 오케스트레이션(세션 기동 순서)은 실험자 담당이며 측정 토큰에 포함되지 않음
 - 시작 시각: 2026-07-20 18:47:59 (계획 세션 시작)

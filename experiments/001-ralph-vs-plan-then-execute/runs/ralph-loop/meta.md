@@ -1,6 +1,6 @@
 # ralph-loop 실행 기록
 
-- 작업 리포: `~/Workspace/roboco-io/research/realworld-exp001-ralph` (빈 저장소, CLAUDE.md 없음)
+- 작업 리포: `~/Workspace/roboco-io/research/_experiments/realworld-exp001-ralph` (빈 저장소, CLAUDE.md 없음)
 - 모델: Claude Opus (`claude --model opus -p`)
 - 실행 방식: headless Ralph loop — `ralph.sh`가 `PROMPT.md`를 골로 `claude -p --dangerously-skip-permissions`를 최대 15회 반복, 완료 마커 `.ralph-done` 생성 시 중단. 이터레이션당 새 프로세스(새 세션 로그)
 - 시작 시각: 2026-07-20 09:00:34 (유효 실행)

@@ -1,6 +1,6 @@
 # skills-2 실행 기록
 
-- 작업 리포: `~/Workspace/roboco-io/research/realworld-exp004-skills-2` (빈 저장소 + `.claude/skills/` 6개 사전 배치)
+- 작업 리포: `~/Workspace/roboco-io/research/_experiments/realworld-exp004-skills-2` (빈 저장소 + `.claude/skills/` 6개 사전 배치)
 - 조건: ralph + 스킬 (skills-1과 동일)
 - 시작: 2026-07-21 23:13:03 / 종료: 23:20:48 (이터레이션 1회, 약 7.5분)
 

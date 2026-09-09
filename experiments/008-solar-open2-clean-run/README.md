@@ -83,7 +83,7 @@ done
 ## Phase 0 (기동 전 관문 — 하나라도 실패 시 시작 금지)
 
 1. 격리 스모크: `CLAUDE_CONFIG_DIR=$BASE/claude-config` + 직결 env로 `claude -p` 왕복 성공, 출력에 superpowers/CLAUDE.md 흔적 없음 확인 (세션 JSONL에서 SessionStart 훅 부재 검증)
-2. PROMPT.md byte-identical: `diff` 대상 `~/Workspace/roboco-io/research/realworld-exp005-solar-1/PROMPT.md`
+2. PROMPT.md byte-identical: `diff` 대상 `~/Workspace/roboco-io/research/_experiments/realworld-exp005-solar-1/PROMPT.md`
 3. harness-hurl 정본성: EXP-006 벤더링본(byte-identical 검증됨)에서 복사 후 재 diff
 4. `measure.sh` 단독 동작: EXP-006 최종 산출물(`realworld-exp006-open2-2`) 대상 dry-run → `3,94` 재현 확인
 5. CCR 정지(`ccr stop`) 및 포트 8000 비점유 확인

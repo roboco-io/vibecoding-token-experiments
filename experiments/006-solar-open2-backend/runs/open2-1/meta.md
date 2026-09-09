@@ -1,7 +1,7 @@
 # open2-1 run meta
 
 - 시작: 2026-07-26 16:20대 (ralph-run.log 1행이 정본)
-- 작업 리포: ~/Workspace/roboco-io/research/realworld-exp006-open2-1
+- 작업 리포: ~/Workspace/roboco-io/research/_experiments/realworld-exp006-open2-1
 - 경로: claude-code-router 1.0.73 (:3456) → Upstage API (OpenAI 호환)
 - 모델: solar-open2 / small-fast: solar-mini
 - transformer: open2-split(멀티 tool_calls 델타 분리) + solar-fix(reasoning→reasoning_effort=high, solar-open2 포함하도록 확장) + streamoptions

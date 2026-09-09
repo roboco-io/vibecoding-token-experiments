@@ -1,6 +1,6 @@
 # ko-2 실행 기록
 
-- 작업 리포: `~/Workspace/roboco-io/research/realworld-exp002-ko-2` (빈 저장소, CLAUDE.md 없음)
+- 작업 리포: `~/Workspace/roboco-io/research/_experiments/realworld-exp002-ko-2` (빈 저장소, CLAUDE.md 없음)
 - 조건: KO (전 파이프라인 한국어), 프롬프트 [prompts/ko.md](../../prompts/ko.md)
 - 실행 방식: headless Ralph loop (최대 15회, `.ralph-done` 마커)
 - 시작 시각: 2026-07-21 13:31:34
